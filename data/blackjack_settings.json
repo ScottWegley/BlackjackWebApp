@@ -3,10 +3,5 @@
         "decks": 6,
         "cash": 2000,
         "admin": true
-    },
-    "current": {
-        "decks": 6,
-        "cash": 2000,
-        "admin": true
     }
 }
