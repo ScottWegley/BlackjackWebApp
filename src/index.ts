@@ -1,1 +1,3 @@
-console.log('oh no');
+document.addEventListener('load', () => {
+
+});
