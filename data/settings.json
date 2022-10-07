@@ -1,9 +1,18 @@
 {
     "blackjack": {
         "default": {
-            "decks": 6,
-            "cash": 2000,
-            "admin": true
+            "decks": {
+                "description": "How many decks to deal the game with.",
+                "value": 6
+            },
+            "cash": {
+                "description": "How much cash the player starts with.",
+                "value": 2000
+            },
+            "admin": {
+                "description": "Whether or not to enable admin mode.",
+                "value": true
+            }
         }
     }
 }
