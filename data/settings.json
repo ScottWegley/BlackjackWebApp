@@ -1,0 +1,9 @@
+{
+    "blackjack": {
+        "default": {
+            "decks": 6,
+            "cash": 2000,
+            "admin": true
+        }
+    }
+}
