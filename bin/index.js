@@ -22,7 +22,6 @@ window.addEventListener('load', () => {
     startIndex();
 });
 function startIndex() {
-    var _a;
     if (sessionStorage.getItem('blackjacksettings') === null) {
         console.log('Settings do not exist');
         settings = new BlackjackSettings();
@@ -36,7 +35,8 @@ function startIndex() {
     document.getElementById('inCash').value = settings.cashStart.toString();
     document.getElementById('inAdmin').checked = settings.admin;
     console.log(settings);
-    (_a = document.getElementById('formSettings')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', (ev) => {
+    var form = document.getElementById('formSettings');
+    form.addEventListener('submit', (ev) => {
         ev.preventDefault();
         if (validateSettings()) {
             settings.decks = document.getElementById('inDecks').valueAsNumber;

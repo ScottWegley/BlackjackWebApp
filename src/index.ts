@@ -43,9 +43,10 @@ function startIndex(): void {
     (document.getElementById('inCash') as HTMLInputElement).value = settings.cashStart.toString();
     (document.getElementById('inAdmin') as HTMLInputElement).checked = settings.admin;
     console.log(settings)
-    document.getElementById('formSettings')?.addEventListener('submit', (ev: SubmitEvent) => {
+    var form = (document.getElementById('formSettings') as HTMLFormElement);
+    form.addEventListener('submit', (ev: SubmitEvent) => {
         ev.preventDefault();
-        if(validateSettings()){
+        if (validateSettings()) {
             settings.decks = (document.getElementById('inDecks') as HTMLInputElement).valueAsNumber;
             settings.cashStart = (document.getElementById('inCash') as HTMLInputElement).valueAsNumber;
             settings.admin = (document.getElementById('inAdmin') as HTMLInputElement).checked;
@@ -57,7 +58,7 @@ function startIndex(): void {
 
 function validateSettings(): boolean {
     console.log('validating')
-    if((document.getElementById('inDecks') as HTMLInputElement).valueAsNumber *  (document.getElementById('inCash') as HTMLInputElement).valueAsNumber <= 0){
+    if ((document.getElementById('inDecks') as HTMLInputElement).valueAsNumber * (document.getElementById('inCash') as HTMLInputElement).valueAsNumber <= 0) {
         return false;
     }
     return true;
