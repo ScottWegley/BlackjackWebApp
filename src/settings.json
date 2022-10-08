@@ -5,7 +5,7 @@
                 "description": "How many decks to deal the game with.",
                 "value": 6
             },
-            "cash": {
+            "cashStart": {
                 "description": "How much cash the player starts with.",
                 "value": 2000
             },
