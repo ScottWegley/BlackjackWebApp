@@ -42,6 +42,7 @@ function startIndex(): void {
     (document.getElementById('inDecks') as HTMLInputElement).value = settings.decks.toString();
     (document.getElementById('inCash') as HTMLInputElement).value = settings.cashStart.toString();
     (document.getElementById('inAdmin') as HTMLInputElement).checked = settings.admin;
+    console.log(settings)
     document.getElementById('formSettings')?.addEventListener('submit', (ev: SubmitEvent) => {
         ev.preventDefault();
         if(validateSettings()){
