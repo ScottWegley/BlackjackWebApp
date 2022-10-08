@@ -2,31 +2,44 @@ let settings: BlackjackSettings;
 
 window.addEventListener('load', () => {
     startIndex();
-}); 
+});
 
 
 function startIndex(): void {
-    if(sessionStorage.getItem('settings') === null){ //Only true if page loads for the first time because we load the default settings
-        console.log("No settings exist");
-        console.log(settings);
+    if (sessionStorage.getItem('blackjacksettings') === null) { //If settings not in storage, create settings and store
+        console.log('Settings do not exist');
         settings = new BlackjackSettings();
+        sessionStorage.setItem('blackjacksettings', settings.toJSON());
+    } else {
+        console.log('Settings already exist');
+        settings = new BlackjackSettings();
+        settings.update(sessionStorage.getItem('blackjacksettings'));
+        console.log(sessionStorage.getItem('blackjacksettings'));
         console.log(settings);
     }
 }
 
 class BlackjackSettings {
-    decks: number = 6;
-    cashStart: number = 2000;
-    admin: boolean = true;
+    decks: number;
+    cashStart: number;
+    admin: boolean;
 
-    constructor(iDecks?:number, iCash?:number, iAdmin?:boolean){
-        if(typeof iDecks === 'undefined' || typeof iCash === 'undefined' || typeof iAdmin === 'undefined'){
-            return;
-        }
-        else{
-            this.decks = iDecks;
-            this.cashStart = iCash;
-            this.admin = iAdmin;
-        }
+    constructor(iDecks: number = 6, iCash: number = 2000, iAdmin: boolean = true) {
+        this.decks = iDecks;
+        this.cashStart = iCash;
+        this.admin = iAdmin
     }
+
+    toJSON(): string {
+        return JSON.stringify({'decks': this.decks, 'cashStart': this.cashStart, 'admin':this.admin});
+    }
+
+    update(inSettings: string | null): void{
+        if(typeof inSettings === 'string'){
+            var temp = JSON.parse(inSettings);
+            this.decks = temp.decks;
+            this.cashStart = temp.cashStart;
+            this.admin = temp.admin;
+        }
+    } 
 }
