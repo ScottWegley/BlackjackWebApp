@@ -1,22 +1,4 @@
 "use strict";
-let settings;
-window.addEventListener('load', () => {
-    startIndex();
-});
-function startIndex() {
-    if (sessionStorage.getItem('blackjacksettings') === null) {
-        console.log('Settings do not exist');
-        settings = new BlackjackSettings();
-        sessionStorage.setItem('blackjacksettings', settings.toJSON());
-    }
-    else {
-        console.log('Settings already exist');
-        settings = new BlackjackSettings();
-        settings.update(sessionStorage.getItem('blackjacksettings'));
-        console.log(sessionStorage.getItem('blackjacksettings'));
-        console.log(settings);
-    }
-}
 class BlackjackSettings {
     constructor(iDecks = 6, iCash = 2000, iAdmin = true) {
         this.decks = iDecks;
@@ -34,4 +16,40 @@ class BlackjackSettings {
             this.admin = temp.admin;
         }
     }
+}
+let settings = new BlackjackSettings();
+window.addEventListener('load', () => {
+    startIndex();
+});
+function startIndex() {
+    var _a;
+    if (sessionStorage.getItem('blackjacksettings') === null) {
+        console.log('Settings do not exist');
+        settings = new BlackjackSettings();
+        sessionStorage.setItem('blackjacksettings', settings.toJSON());
+    }
+    else {
+        console.log('Settings already exist');
+        settings.update(sessionStorage.getItem('blackjacksettings'));
+    }
+    document.getElementById('inDecks').value = settings.decks.toString();
+    document.getElementById('inCash').value = settings.cashStart.toString();
+    document.getElementById('inAdmin').checked = settings.admin;
+    (_a = document.getElementById('formSettings')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        if (validateSettings()) {
+            settings.decks = document.getElementById('inDecks').valueAsNumber;
+            settings.cashStart = document.getElementById('inCash').valueAsNumber;
+            settings.admin = document.getElementById('inAdmin').checked;
+            sessionStorage.setItem('blackjacksettings', settings.toJSON());
+            window.location.href = './game.html';
+        }
+    });
+}
+function validateSettings() {
+    console.log('validating');
+    if (document.getElementById('inDecks').valueAsNumber * document.getElementById('inCash').valueAsNumber <= 0) {
+        return false;
+    }
+    return true;
 }
