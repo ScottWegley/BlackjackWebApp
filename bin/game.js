@@ -17,6 +17,35 @@ class GameSettings {
         }
     }
 }
+var Suit;
+(function (Suit) {
+    Suit["CLUB"] = "Club";
+    Suit["DIAMOND"] = "Diamond";
+    Suit["SPADE"] = "Spade";
+    Suit["HEART"] = "Heart";
+})(Suit || (Suit = {}));
+var Value;
+(function (Value) {
+    Value["ACE"] = "Ace";
+    Value["TWO"] = "Two";
+    Value["THREE"] = "Three";
+    Value["FOUR"] = "Four";
+    Value["FIVE"] = "Five";
+    Value["SIX"] = "Six";
+    Value["SEVEN"] = "Seven";
+    Value["EIGHT"] = "Eight";
+    Value["NINE"] = "Nine";
+    Value["TEN"] = "Ten";
+    Value["JACK"] = "Jack";
+    Value["QUEEN"] = "Queen";
+    Value["KING"] = "King";
+})(Value || (Value = {}));
+class Card {
+    constructor(inSuit, inValue) {
+        this.suit = inSuit;
+        this.value = inValue;
+    }
+}
 let active = false;
 window.addEventListener('load', () => {
     startGame();

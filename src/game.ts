@@ -23,6 +23,39 @@ class GameSettings {
     }
 }
 
+enum Suit {
+    CLUB = "Club",
+    DIAMOND = "Diamond",
+    SPADE = "Spade",
+    HEART = "Heart"
+}
+
+enum Value {
+    ACE = "Ace",
+    TWO = "Two",
+    THREE = "Three",
+    FOUR = "Four",
+    FIVE = "Five",
+    SIX = "Six",
+    SEVEN = "Seven",
+    EIGHT = "Eight",
+    NINE = "Nine",
+    TEN = "Ten",
+    JACK = "Jack",
+    QUEEN = "Queen",
+    KING = "King"
+}
+
+class Card {
+    suit: Suit;
+    value: Value;
+
+    constructor(inSuit: Suit, inValue: Value) {
+        this.suit = inSuit;
+        this.value = inValue;
+    }
+}
+
 let active: boolean = false;
 
 window.addEventListener('load', () => {
