@@ -23,14 +23,14 @@ class GameSettings {
     }
 }
 
-enum Suit {
+const enum Suit {
     CLUB = "Club",
     DIAMOND = "Diamond",
     SPADE = "Spade",
     HEART = "Heart"
 }
 
-enum Value {
+const enum Value {
     ACE = "Ace",
     TWO = "Two",
     THREE = "Three",
