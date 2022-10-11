@@ -24,10 +24,10 @@ class GameSettings {
 }
 
 const enum Suit {
-    CLUB = "Club",
-    DIAMOND = "Diamond",
-    SPADE = "Spade",
-    HEART = "Heart"
+    CLUB = "Clubs",
+    DIAMOND = "Diamonds",
+    SPADE = "Spades",
+    HEART = "Hearts"
 }
 
 const enum Value {
@@ -47,15 +47,15 @@ const enum Value {
 }
 
 class Card {
-    suit: Suit;
     value: Value;
+    suit: Suit;
 
-    constructor(inSuit: Suit, inValue: Value) {
-        this.suit = inSuit;
+    constructor(inValue: Value, inSuit: Suit) {
         this.value = inValue;
+        this.suit = inSuit;
     }
 
-    toString = () : string => {
+    toString = (): string => {
         return this.value + " of " + this.suit;
     }
 }
@@ -85,32 +85,32 @@ function startGame(): void {
     var admin3: HTMLButtonElement = document.getElementById('btnAdmin3') as HTMLButtonElement;
     var admin4: HTMLButtonElement = document.getElementById('btnAdmin4') as HTMLButtonElement;
 
-    admin1.addEventListener('click', testOne);
-    admin2.addEventListener('click', testTwo);
-    admin3.addEventListener('click', testThree);
-    admin4.addEventListener('click', testFour);
+    admin1.addEventListener('click', () => { testOne() });
+    admin2.addEventListener('click', () => { testTwo() });
+    admin3.addEventListener('click', () => { testThree() });
+    admin4.addEventListener('click', () => { testFour() });
 
     gameLoop();
 }
 
-function testOne(): void{
+function testOne(): void {
 
 }
 
-function testTwo(): void{
-    
+function testTwo(): void {
+
 }
 
-function testThree(): void{
-    
+function testThree(): void {
+
 }
 
-function testFour(): void{
-    
+function testFour(): void {
+
 }
 
-function gameLoop(): void{
+function gameLoop(): void {
     while (active) {
-        
+
     }
 }

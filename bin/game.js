@@ -18,12 +18,12 @@ class GameSettings {
     }
 }
 class Card {
-    constructor(inSuit, inValue) {
+    constructor(inValue, inSuit) {
         this.toString = () => {
             return this.value + " of " + this.suit;
         };
-        this.suit = inSuit;
         this.value = inValue;
+        this.suit = inSuit;
     }
 }
 let active = false;
@@ -38,10 +38,10 @@ function startGame() {
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');
     var admin4 = document.getElementById('btnAdmin4');
-    admin1.addEventListener('click', testOne);
-    admin2.addEventListener('click', testTwo);
-    admin3.addEventListener('click', testThree);
-    admin4.addEventListener('click', testFour);
+    admin1.addEventListener('click', () => { testOne(); });
+    admin2.addEventListener('click', () => { testTwo(); });
+    admin3.addEventListener('click', () => { testThree(); });
+    admin4.addEventListener('click', () => { testFour(); });
     gameLoop();
 }
 function testOne() {
