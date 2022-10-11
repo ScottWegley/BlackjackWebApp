@@ -34,7 +34,23 @@ function startGame() {
     var settings = new GameSettings();
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
+    var admin1 = document.getElementById('btnAdmin1');
+    var admin2 = document.getElementById('btnAdmin2');
+    var admin3 = document.getElementById('btnAdmin3');
+    var admin4 = document.getElementById('btnAdmin4');
+    admin1.addEventListener('click', testOne);
+    admin2.addEventListener('click', testTwo);
+    admin3.addEventListener('click', testThree);
+    admin4.addEventListener('click', testFour);
     gameLoop();
+}
+function testOne() {
+}
+function testTwo() {
+}
+function testThree() {
+}
+function testFour() {
 }
 function gameLoop() {
     while (active) {

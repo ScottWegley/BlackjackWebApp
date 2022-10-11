@@ -80,7 +80,33 @@ function startGame(): void {
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
 
+    var admin1: HTMLButtonElement = document.getElementById('btnAdmin1') as HTMLButtonElement;
+    var admin2: HTMLButtonElement = document.getElementById('btnAdmin2') as HTMLButtonElement;
+    var admin3: HTMLButtonElement = document.getElementById('btnAdmin3') as HTMLButtonElement;
+    var admin4: HTMLButtonElement = document.getElementById('btnAdmin4') as HTMLButtonElement;
+
+    admin1.addEventListener('click', testOne);
+    admin2.addEventListener('click', testTwo);
+    admin3.addEventListener('click', testThree);
+    admin4.addEventListener('click', testFour);
+
     gameLoop();
+}
+
+function testOne(): void{
+
+}
+
+function testTwo(): void{
+    
+}
+
+function testThree(): void{
+    
+}
+
+function testFour(): void{
+    
 }
 
 function gameLoop(): void{
