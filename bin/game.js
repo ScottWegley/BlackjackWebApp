@@ -19,6 +19,9 @@ class GameSettings {
 }
 class Card {
     constructor(inSuit, inValue) {
+        this.toString = () => {
+            return this.value + " of " + this.suit;
+        };
         this.suit = inSuit;
         this.value = inValue;
     }

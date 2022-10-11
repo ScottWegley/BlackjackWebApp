@@ -54,7 +54,20 @@ class Card {
         this.suit = inSuit;
         this.value = inValue;
     }
+
+    toString = () : string => {
+        return this.value + " of " + this.suit;
+    }
 }
+
+/* class Deck {
+    size:number = 52;
+    cards:Card[];
+
+    constructor(){
+        for
+    }
+} */
 
 let active: boolean = false;
 
