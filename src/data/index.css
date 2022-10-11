@@ -3,3 +3,7 @@ body {
     background-color: black;
     color: white;
 }
+
+div#menu {
+    text-align: center;
+}
