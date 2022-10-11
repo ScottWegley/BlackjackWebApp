@@ -23,12 +23,22 @@ class GameSettings {
     }
 }
 
+let active: boolean = false;
+
 window.addEventListener('load', () => {
-    startGame();;
+    startGame();
 })
 
 function startGame(): void {
     var settings = new GameSettings();
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
+
+    gameLoop();
+}
+
+function gameLoop(): void{
+    while (active) {
+        
+    }
 }

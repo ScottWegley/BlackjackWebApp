@@ -17,12 +17,17 @@ class GameSettings {
         }
     }
 }
+let active = false;
 window.addEventListener('load', () => {
     startGame();
-    ;
 });
 function startGame() {
     var settings = new GameSettings();
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
+    gameLoop();
+}
+function gameLoop() {
+    while (active) {
+    }
 }
