@@ -9,11 +9,11 @@ class GameSettings {
         this.admin = iAdmin
     }
 
-    toJSON(): string {
+    toJSON(): string { //SLight misnomer but it makes sense to me.  Returns JSON String, not actual object
         return JSON.stringify({ 'decks': this.decks, 'cashStart': this.cashStart, 'admin': this.admin });
     }
 
-    update(inSettings: string | null): void {
+    update(inSettings: string | null): void { //Fast way to update settings variable from session storage
         if (typeof inSettings === 'string') {
             var temp = JSON.parse(inSettings);
             this.decks = temp.decks;
@@ -23,28 +23,12 @@ class GameSettings {
     }
 }
 
-const enum Suit {
-    CLUB = "Clubs",
-    DIAMOND = "Diamonds",
-    SPADE = "Spades",
-    HEART = "Hearts"
-}
 
-const enum Value {
-    ACE = "Ace",
-    TWO = "Two",
-    THREE = "Three",
-    FOUR = "Four",
-    FIVE = "Five",
-    SIX = "Six",
-    SEVEN = "Seven",
-    EIGHT = "Eight",
-    NINE = "Nine",
-    TEN = "Ten",
-    JACK = "Jack",
-    QUEEN = "Queen",
-    KING = "King"
-}
+const suits = ["Clubs", "Diamonds", "Spades", "Hearts"] as const;
+type Suit = typeof suits[number]; //Weird way of doing it but allows mes to iterate through so.
+
+const values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"] as const;
+type Value = typeof values[number];
 
 class Card {
     value: Value;
@@ -55,19 +39,23 @@ class Card {
         this.suit = inSuit;
     }
 
-    toString = (): string => {
+    toString = (): string => { //Override to string.
         return this.value + " of " + this.suit;
     }
 }
 
-/* class Deck {
-    size:number = 52;
-    cards:Card[];
+class Deck {
+    size: number = 52;
+    cards: Array<Card> = [];
 
-    constructor(){
-        for
+    constructor() {
+        values.forEach(tValue => {
+            suits.forEach(tSuit => {
+                this.cards.push(new Card(tValue, tSuit));
+            })
+        });
     }
-} */
+}
 
 let active: boolean = false;
 

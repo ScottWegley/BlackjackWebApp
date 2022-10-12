@@ -17,6 +17,8 @@ class GameSettings {
         }
     }
 }
+const suits = ["Clubs", "Diamonds", "Spades", "Hearts"];
+const values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"];
 class Card {
     constructor(inValue, inSuit) {
         this.toString = () => {
@@ -24,6 +26,17 @@ class Card {
         };
         this.value = inValue;
         this.suit = inSuit;
+    }
+}
+class Deck {
+    constructor() {
+        this.size = 52;
+        this.cards = [];
+        values.forEach(tValue => {
+            suits.forEach(tSuit => {
+                this.cards.push(new Card(tValue, tSuit));
+            });
+        });
     }
 }
 let active = false;
