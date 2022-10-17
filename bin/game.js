@@ -30,6 +30,13 @@ class Card {
 }
 class Pile {
     constructor(inSize) {
+        this.toString = () => {
+            var s = "";
+            for (let i = 0; i < this.currentSize; i++) {
+                s += this.cards[i].toString() + "\n";
+            }
+            return s;
+        };
         this.maxSize = inSize;
         this.cards = new Array(this.maxSize);
         this.currentSize = 0;
@@ -86,6 +93,10 @@ function startGame() {
     gameLoop();
 }
 function testOne() {
+    var myDeck = new Deck();
+    console.log(myDeck);
+    myDeck.shuffle;
+    console.log("Shuffled \n" + myDeck);
 }
 function testTwo() {
 }

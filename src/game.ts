@@ -75,6 +75,14 @@ abstract class Pile {
             [this.cards[cIndex], this.cards[rIndex]] = [this.cards[rIndex], this.cards[cIndex]];
         }
     }
+
+    toString = (): string => {
+        var s: string = "";
+        for(let i = 0; i < this.currentSize; i++){
+            s += this.cards[i].toString() + "\n";
+        }
+        return s;
+    }
 }
 
 class Deck extends Pile {
@@ -115,7 +123,10 @@ function startGame(): void {
 }
 
 function testOne(): void {
-
+    var myDeck = new Deck();
+    console.log(myDeck);
+    myDeck.shuffle;
+    console.log("Shuffled \n" + myDeck);
 }
 
 function testTwo(): void {
