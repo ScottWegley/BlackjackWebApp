@@ -67,12 +67,13 @@ abstract class Pile {
 
     shuffle(): void {
         if(this.currentSize == 0) {return;}
-        var newDeck: Card[] = new Array(this.maxSize);
-        
-    }
-
-    static shuffle(inPile: Pile): void {
-
+        var cIndex:number = this.currentSize;
+        var rIndex: number;
+        while(cIndex != 0){
+            rIndex = Math.floor(Math.random() * cIndex);
+            cIndex--;
+            [this.cards[cIndex], this.cards[rIndex]] = [this.cards[rIndex], this.cards[cIndex]];
+        }
     }
 }
 

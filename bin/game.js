@@ -45,8 +45,16 @@ class Pile {
         }
     }
     shuffle() {
-    }
-    static shuffle() {
+        if (this.currentSize == 0) {
+            return;
+        }
+        var cIndex = this.currentSize;
+        var rIndex;
+        while (cIndex != 0) {
+            rIndex = Math.floor(Math.random() * cIndex);
+            cIndex--;
+            [this.cards[cIndex], this.cards[rIndex]] = [this.cards[rIndex], this.cards[cIndex]];
+        }
     }
 }
 class Deck extends Pile {
