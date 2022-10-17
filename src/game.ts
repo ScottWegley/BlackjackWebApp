@@ -44,17 +44,49 @@ class Card {
     }
 }
 
-class Deck {
-    size: number = 52;
-    cards: Array<Card> = [];
+abstract class Pile {
+    maxSize: number;
+    currentSize: number;
+    cards: Card[];
+
+    constructor(inSize: number) {
+        this.maxSize = inSize
+        this.cards = new Array(this.maxSize);
+        this.currentSize = 0;
+    }
+
+    add(inCard: Card): boolean {
+        if (this.currentSize < this.maxSize) {
+            this.cards.push(inCard);
+            this.currentSize++;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    shuffle(): void {
+        if(this.currentSize == 0) {return;}
+        var newDeck: Card[] = new Array(this.maxSize);
+        
+    }
+
+    static shuffle(inPile: Pile): void {
+
+    }
+}
+
+class Deck extends Pile {
 
     constructor() {
+        super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
                 this.cards.push(new Card(tValue, tSuit));
             })
-        });
+        })
     }
+
 }
 
 let active: boolean = false;

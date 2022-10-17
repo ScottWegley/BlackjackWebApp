@@ -28,10 +28,30 @@ class Card {
         this.suit = inSuit;
     }
 }
-class Deck {
+class Pile {
+    constructor(inSize) {
+        this.maxSize = inSize;
+        this.cards = new Array(this.maxSize);
+        this.currentSize = 0;
+    }
+    add(inCard) {
+        if (this.currentSize < this.maxSize) {
+            this.cards.push(inCard);
+            this.currentSize++;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    shuffle() {
+    }
+    static shuffle() {
+    }
+}
+class Deck extends Pile {
     constructor() {
-        this.size = 52;
-        this.cards = [];
+        super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
                 this.cards.push(new Card(tValue, tSuit));
