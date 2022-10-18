@@ -151,9 +151,10 @@ class Hand extends Pile {
     }
 }
 
-let active: boolean = true;
+//let active: boolean = true;
 let iSettings: GameSettings;
-let dealerPile, discardPile: Pile;
+let dealerPile: Pile, discardPile: Pile;
+let currentMoney: number, currentBet: number;
 
 window.addEventListener('load', () => {
     startGame();
@@ -163,11 +164,6 @@ function startGame(): void {
     iSettings = new GameSettings();
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
-
-    Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
-        let myEle = ele as HTMLElement;
-        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
-    })
 
     var admin1: HTMLButtonElement = document.getElementById('btnAdmin1') as HTMLButtonElement;
     var admin2: HTMLButtonElement = document.getElementById('btnAdmin2') as HTMLButtonElement;
@@ -179,7 +175,14 @@ function startGame(): void {
     admin3.addEventListener('click', () => { adminThree() });
     admin4.addEventListener('click', () => { adminFour() });
 
-    gameLoop();
+    gameSetup();
+
+    var chkAdmin: HTMLInputElement = document.getElementById('chkAdmin') as HTMLInputElement;
+
+    chkAdmin.addEventListener('change', () => {
+        iSettings.admin = chkAdmin.checked;
+        updateDisplay();
+    })
 }
 
 function adminOne(): void {
@@ -199,8 +202,12 @@ function adminFour(): void {
 
 }
 
-function gameLoop(): void {
+function gameSetup(): void {
 
+    currentMoney = iSettings.cashStart;
+    currentBet = 0;
+
+    updateDisplay();
     dealerPile = new Pile(52 * iSettings.decks);
     for (let i = 0; i < iSettings.decks; i++) {
         dealerPile.add(new Deck());
@@ -208,8 +215,19 @@ function gameLoop(): void {
 
     dealerPile.shuffle();
 
-    while (active) {
+    /* while (active) {
 
         active = false;
-    }
+    } */
+}
+
+function updateDisplay(): void {
+    Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
+        let myEle = ele as HTMLElement;
+        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
+    });
+
+    (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
+    (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
+    (document.getElementById('chkAdmin') as HTMLInputElement).checked = iSettings.admin;
 }

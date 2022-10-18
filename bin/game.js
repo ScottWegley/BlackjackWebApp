@@ -120,9 +120,9 @@ class Hand extends Pile {
     updateValue() {
     }
 }
-let active = true;
 let iSettings;
 let dealerPile, discardPile;
+let currentMoney, currentBet;
 window.addEventListener('load', () => {
     startGame();
 });
@@ -130,10 +130,6 @@ function startGame() {
     iSettings = new GameSettings();
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
-    Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
-        let myEle = ele;
-        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
-    });
     var admin1 = document.getElementById('btnAdmin1');
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');
@@ -142,7 +138,12 @@ function startGame() {
     admin2.addEventListener('click', () => { adminTwo(); });
     admin3.addEventListener('click', () => { adminThree(); });
     admin4.addEventListener('click', () => { adminFour(); });
-    gameLoop();
+    gameSetup();
+    var chkAdmin = document.getElementById('chkAdmin');
+    chkAdmin.addEventListener('change', () => {
+        iSettings.admin = chkAdmin.checked;
+        updateDisplay();
+    });
 }
 function adminOne() {
 }
@@ -152,13 +153,22 @@ function adminThree() {
 }
 function adminFour() {
 }
-function gameLoop() {
+function gameSetup() {
+    currentMoney = iSettings.cashStart;
+    currentBet = 0;
+    updateDisplay();
     dealerPile = new Pile(52 * iSettings.decks);
     for (let i = 0; i < iSettings.decks; i++) {
         dealerPile.add(new Deck());
     }
     dealerPile.shuffle();
-    while (active) {
-        active = false;
-    }
+}
+function updateDisplay() {
+    Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
+        let myEle = ele;
+        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
+    });
+    document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
+    document.getElementById('inBet').value = currentBet.toLocaleString();
+    document.getElementById('chkAdmin').checked = iSettings.admin;
 }
