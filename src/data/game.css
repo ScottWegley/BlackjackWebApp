@@ -7,3 +7,19 @@ body {
 #playerSide .hand {
     display: inline-block;
 }
+
+.displayElement {
+    display: inline-block;
+}
+
+#gameDetails {
+    margin: auto;
+    background-color: gray;
+    width: 25%;
+    text-align: center;
+    color: black;
+}
+
+#inBet {
+    width: 12.5%;
+}

@@ -10,6 +10,14 @@
 
 <body>
     <h1>Blackjack</h1>
+    <div id="gameDetails">
+        <p class="displayElement">Current Money: </p>
+        <p class="displayElement" id="playerMoney"></p>
+        <label class="displayElement">Bet: </label>
+        <input class="displayElement" type="number" id="inBet">
+        <label class="displayElement">Admin: </label>
+        <input class="displayElement" type="checkbox" id="chkAdmin">
+    </div>
     <h3>Dealer</h3>
     <div id="dealerSide">
         <div class="hand" id="dealerHand">
@@ -32,7 +40,6 @@
         <button id="btnSplit">Split</button>
         <button id="btnSurrender">Surrender</button>
     </div>
-
     <div class="admin" id="adminPanel">
         <button class="admin btnAdmin" id="btnAdmin1">Test 1</button>
         <button class="admin btnAdmin" id="btnAdmin3">Test 3</button>
