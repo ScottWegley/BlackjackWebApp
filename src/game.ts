@@ -69,14 +69,14 @@ class Pile {
     }
 
 
-    add(input: Card[] | Pile): Pile {
+    add(input: Card[] | Pile | null): Pile {
         if (input instanceof Pile) {
             if (this.currentSize + input.currentSize < this.maxSize) {
                 input.cards.forEach((inCard: Card) => {
                     this.push(inCard);
                 });
             }
-        } else {
+        } else if (input != null) {
             if (this.currentSize + input.length < this.maxSize) {
                 input.forEach((inCard: Card) => {
                     this.push(inCard);
@@ -154,6 +154,7 @@ function startGame(): void {
 
 function testOne(): void {
     var myPile = new Pile(12);
+    myPile.add(Card.genCards(13))
 }
 
 function testTwo(): void {

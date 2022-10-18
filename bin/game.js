@@ -62,7 +62,7 @@ class Pile {
                 });
             }
         }
-        else {
+        else if (input != null) {
             if (this.currentSize + input.length < this.maxSize) {
                 input.forEach((inCard) => {
                     this.push(inCard);
@@ -124,6 +124,7 @@ function startGame() {
 }
 function testOne() {
     var myPile = new Pile(12);
+    myPile.add(Card.genCards(13));
 }
 function testTwo() {
 }
