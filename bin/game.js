@@ -43,25 +43,23 @@ class Pile {
     }
     add(inCard) {
         if (this.currentSize < this.maxSize) {
-            this.cards.push(inCard);
             this.currentSize++;
-            return true;
+            this.cards[this.currentSize - 1] = inCard;
         }
-        else {
-            return false;
-        }
+        return this;
     }
     shuffle() {
         if (this.currentSize == 0) {
-            return;
+            return this;
         }
-        var cIndex = this.currentSize;
+        var cIndex = this.currentSize - 1;
         var rIndex;
         while (cIndex != 0) {
             rIndex = Math.floor(Math.random() * cIndex);
-            cIndex--;
             [this.cards[cIndex], this.cards[rIndex]] = [this.cards[rIndex], this.cards[cIndex]];
+            cIndex--;
         }
+        return this;
     }
 }
 class Deck extends Pile {
@@ -69,7 +67,7 @@ class Deck extends Pile {
         super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
-                this.cards.push(new Card(tValue, tSuit));
+                this.add(new Card(tValue, tSuit));
             });
         });
     }
@@ -93,10 +91,14 @@ function startGame() {
     gameLoop();
 }
 function testOne() {
-    var myDeck = new Deck();
-    console.log(myDeck);
-    myDeck.shuffle;
-    console.log("Shuffled \n" + myDeck);
+    var myPile = new Pile(10);
+    for (let i = 0; i < 10; i++) {
+        var iValue = values[Math.floor(Math.random() * (values.length - 1))];
+        var iSuit = suits[Math.floor(Math.random() * (suits.length - 1))];
+        myPile.add(new Card(iValue, iSuit));
+    }
+    console.log(myPile.toString());
+    console.log("Breaking \n" + myPile.shuffle().toString());
 }
 function testTwo() {
 }

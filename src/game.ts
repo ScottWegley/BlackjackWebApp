@@ -44,7 +44,7 @@ class Card {
     }
 }
 
-abstract class Pile {
+class Pile {
     maxSize: number;
     currentSize: number;
     cards: Card[];
@@ -55,30 +55,29 @@ abstract class Pile {
         this.currentSize = 0;
     }
 
-    add(inCard: Card): boolean {
+    add(inCard: Card): Pile {
         if (this.currentSize < this.maxSize) {
-            this.cards.push(inCard);
             this.currentSize++;
-            return true;
-        } else {
-            return false;
+            this.cards[this.currentSize - 1] = inCard;
         }
+        return this;
     }
 
-    shuffle(): void {
-        if(this.currentSize == 0) {return;}
-        var cIndex:number = this.currentSize;
+    shuffle(): Pile {
+        if (this.currentSize == 0) { return this; }
+        var cIndex: number = this.currentSize - 1;
         var rIndex: number;
-        while(cIndex != 0){
+        while (cIndex != 0) {
             rIndex = Math.floor(Math.random() * cIndex);
-            cIndex--;
             [this.cards[cIndex], this.cards[rIndex]] = [this.cards[rIndex], this.cards[cIndex]];
+            cIndex--;
         }
+        return this;
     }
 
     toString = (): string => {
         var s: string = "";
-        for(let i = 0; i < this.currentSize; i++){
+        for (let i = 0; i < this.currentSize; i++) {
             s += this.cards[i].toString() + "\n";
         }
         return s;
@@ -91,7 +90,7 @@ class Deck extends Pile {
         super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
-                this.cards.push(new Card(tValue, tSuit));
+                this.add(new Card(tValue, tSuit));
             })
         })
     }
@@ -123,10 +122,14 @@ function startGame(): void {
 }
 
 function testOne(): void {
-    var myDeck = new Deck();
-    console.log(myDeck);
-    myDeck.shuffle;
-    console.log("Shuffled \n" + myDeck);
+    var myPile = new Pile(10);
+    for (let i = 0; i < 10; i++) {
+        var iValue = values[Math.floor(Math.random() * (values.length - 1))]
+        var iSuit = suits[Math.floor(Math.random() * (suits.length - 1))]
+        myPile.add(new Card(iValue, iSuit));
+    }
+    console.log(myPile.toString());
+    console.log("Breaking \n" + myPile.shuffle().toString());
 }
 
 function testTwo(): void {
