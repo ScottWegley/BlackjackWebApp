@@ -27,6 +27,19 @@ class Card {
         this.value = inValue;
         this.suit = inSuit;
     }
+    static genCard() {
+        return new Card(values[Math.floor(Math.random() * (values.length - 1))], suits[Math.floor(Math.random() * (suits.length - 1))]);
+    }
+    static genCards(cNum) {
+        if (cNum < 0) {
+            return null;
+        }
+        var outCards = new Array(cNum);
+        for (let i = 0; i < cNum; i++) {
+            outCards.push(Card.genCard());
+        }
+        return outCards;
+    }
 }
 class Pile {
     constructor(inSize) {
@@ -41,7 +54,24 @@ class Pile {
         this.cards = new Array(this.maxSize);
         this.currentSize = 0;
     }
-    add(inCard) {
+    add(input) {
+        if (input instanceof Pile) {
+            if (this.currentSize + input.currentSize < this.maxSize) {
+                input.cards.forEach((inCard) => {
+                    this.push(inCard);
+                });
+            }
+        }
+        else {
+            if (this.currentSize + input.length < this.maxSize) {
+                input.forEach((inCard) => {
+                    this.push(inCard);
+                });
+            }
+        }
+        return this;
+    }
+    push(inCard) {
         if (this.currentSize < this.maxSize) {
             this.currentSize++;
             this.cards[this.currentSize - 1] = inCard;
@@ -67,7 +97,7 @@ class Deck extends Pile {
         super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
-                this.add(new Card(tValue, tSuit));
+                this.push(new Card(tValue, tSuit));
             });
         });
     }
@@ -93,6 +123,7 @@ function startGame() {
     gameLoop();
 }
 function testOne() {
+    var myPile = new Pile(12);
 }
 function testTwo() {
 }
@@ -102,7 +133,6 @@ function testFour() {
 }
 function gameLoop() {
     while (active) {
-        iSettings.decks;
         active = false;
     }
 }

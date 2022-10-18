@@ -42,6 +42,19 @@ class Card {
     toString = (): string => { //Override to string.
         return this.value + " of " + this.suit;
     }
+
+    static genCard(): Card {
+        return new Card(values[Math.floor(Math.random() * (values.length - 1))], suits[Math.floor(Math.random() * (suits.length - 1))]);
+    }
+
+    static genCards(cNum: number): Card[] | null {
+        if (cNum < 0) { return null; }
+        var outCards: Card[] = new Array<Card>(cNum);
+        for (let i = 0; i < cNum; i++) {
+            outCards.push(Card.genCard());
+        }
+        return outCards;
+    }
 }
 
 class Pile {
@@ -55,7 +68,25 @@ class Pile {
         this.currentSize = 0;
     }
 
-    add(inCard: Card): Pile {
+
+    add(input: Card[] | Pile): Pile {
+        if (input instanceof Pile) {
+            if (this.currentSize + input.currentSize < this.maxSize) {
+                input.cards.forEach((inCard: Card) => {
+                    this.push(inCard);
+                });
+            }
+        } else {
+            if (this.currentSize + input.length < this.maxSize) {
+                input.forEach((inCard: Card) => {
+                    this.push(inCard);
+                });
+            }
+        }
+        return this;
+    }
+
+    push(inCard: Card): Pile {
         if (this.currentSize < this.maxSize) {
             this.currentSize++;
             this.cards[this.currentSize - 1] = inCard;
@@ -85,16 +116,14 @@ class Pile {
 }
 
 class Deck extends Pile {
-
     constructor() {
         super(52);
         values.forEach(tValue => {
             suits.forEach(tSuit => {
-                this.add(new Card(tValue, tSuit));
+                this.push(new Card(tValue, tSuit));
             })
         })
     }
-
 }
 
 let active: boolean = true;
@@ -124,7 +153,7 @@ function startGame(): void {
 }
 
 function testOne(): void {
-    
+    var myPile = new Pile(12);
 }
 
 function testTwo(): void {
@@ -141,7 +170,7 @@ function testFour(): void {
 
 function gameLoop(): void {
     while (active) {
-        iSettings.decks;
+
         active = false;
     }
 }
