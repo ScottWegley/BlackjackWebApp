@@ -130,6 +130,27 @@ class Deck extends Pile {
     }
 }
 
+class Hand extends Pile {
+    value: number[];
+    
+    constructor() {
+        super(1);
+        this.value = [0];
+    }
+
+    push(inCard: Card): Pile {
+        if(this.currentSize == this.maxSize){
+            this.maxSize++;
+        }
+        super.push(inCard);
+        return this;
+    }
+
+    updateValue(): void {
+        
+    }
+}
+
 let active: boolean = true;
 let iSettings: GameSettings;
 let dealerPile, discardPile: Pile;
@@ -157,8 +178,8 @@ function startGame(): void {
 }
 
 function adminOne(): void {
-    
-    
+
+
 }
 
 function adminTwo(): void {
@@ -176,7 +197,7 @@ function adminFour(): void {
 function gameLoop(): void {
 
     dealerPile = new Pile(52 * iSettings.decks);
-    for(let i = 0; i < iSettings.decks; i++){
+    for (let i = 0; i < iSettings.decks; i++) {
         dealerPile.add(new Deck());
     }
 
