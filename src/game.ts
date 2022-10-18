@@ -97,7 +97,7 @@ class Deck extends Pile {
 
 }
 
-let active: boolean = false;
+let active: boolean = true;
 
 window.addEventListener('load', () => {
     startGame();
@@ -122,14 +122,7 @@ function startGame(): void {
 }
 
 function testOne(): void {
-    var myPile = new Pile(10);
-    for (let i = 0; i < 10; i++) {
-        var iValue = values[Math.floor(Math.random() * (values.length - 1))]
-        var iSuit = suits[Math.floor(Math.random() * (suits.length - 1))]
-        myPile.add(new Card(iValue, iSuit));
-    }
-    console.log(myPile.toString());
-    console.log("Breaking \n" + myPile.shuffle().toString());
+    
 }
 
 function testTwo(): void {
@@ -147,5 +140,6 @@ function testFour(): void {
 function gameLoop(): void {
     while (active) {
 
+        active = false;
     }
 }

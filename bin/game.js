@@ -72,7 +72,7 @@ class Deck extends Pile {
         });
     }
 }
-let active = false;
+let active = true;
 window.addEventListener('load', () => {
     startGame();
 });
@@ -91,14 +91,6 @@ function startGame() {
     gameLoop();
 }
 function testOne() {
-    var myPile = new Pile(10);
-    for (let i = 0; i < 10; i++) {
-        var iValue = values[Math.floor(Math.random() * (values.length - 1))];
-        var iSuit = suits[Math.floor(Math.random() * (suits.length - 1))];
-        myPile.add(new Card(iValue, iSuit));
-    }
-    console.log(myPile.toString());
-    console.log("Breaking \n" + myPile.shuffle().toString());
 }
 function testTwo() {
 }
@@ -108,5 +100,6 @@ function testFour() {
 }
 function gameLoop() {
     while (active) {
+        active = false;
     }
 }
