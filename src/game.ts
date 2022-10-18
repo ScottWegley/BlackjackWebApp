@@ -144,28 +144,28 @@ function startGame(): void {
     var admin3: HTMLButtonElement = document.getElementById('btnAdmin3') as HTMLButtonElement;
     var admin4: HTMLButtonElement = document.getElementById('btnAdmin4') as HTMLButtonElement;
 
-    admin1.addEventListener('click', () => { testOne() });
-    admin2.addEventListener('click', () => { testTwo() });
-    admin3.addEventListener('click', () => { testThree() });
-    admin4.addEventListener('click', () => { testFour() });
+    admin1.addEventListener('click', () => { adminOne() });
+    admin2.addEventListener('click', () => { adminTwo() });
+    admin3.addEventListener('click', () => { adminThree() });
+    admin4.addEventListener('click', () => { adminFour() });
 
     gameLoop();
 }
 
-function testOne(): void {
+function adminOne(): void {
     
     
 }
 
-function testTwo(): void {
+function adminTwo(): void {
 
 }
 
-function testThree(): void {
+function adminThree(): void {
 
 }
 
-function testFour(): void {
+function adminFour(): void {
 
 }
 

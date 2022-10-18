@@ -116,19 +116,19 @@ function startGame() {
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');
     var admin4 = document.getElementById('btnAdmin4');
-    admin1.addEventListener('click', () => { testOne(); });
-    admin2.addEventListener('click', () => { testTwo(); });
-    admin3.addEventListener('click', () => { testThree(); });
-    admin4.addEventListener('click', () => { testFour(); });
+    admin1.addEventListener('click', () => { adminOne(); });
+    admin2.addEventListener('click', () => { adminTwo(); });
+    admin3.addEventListener('click', () => { adminThree(); });
+    admin4.addEventListener('click', () => { adminFour(); });
     gameLoop();
 }
-function testOne() {
+function adminOne() {
 }
-function testTwo() {
+function adminTwo() {
 }
-function testThree() {
+function adminThree() {
 }
-function testFour() {
+function adminFour() {
 }
 function gameLoop() {
     while (active) {
