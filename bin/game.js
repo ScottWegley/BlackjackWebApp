@@ -130,6 +130,10 @@ function startGame() {
     iSettings = new GameSettings();
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
+    Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
+        let myEle = ele;
+        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
+    });
     var admin1 = document.getElementById('btnAdmin1');
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');

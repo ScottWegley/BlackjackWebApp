@@ -9,7 +9,7 @@ class GameSettings {
         this.admin = iAdmin
     }
 
-    toJSON(): string { //SLight misnomer but it makes sense to me.  Returns JSON String, not actual object
+    toJSON(): string { //Slight misnomer but it makes sense to me.  Returns JSON String, not actual object
         return JSON.stringify({ 'decks': this.decks, 'cashStart': this.cashStart, 'admin': this.admin });
     }
 
@@ -132,14 +132,14 @@ class Deck extends Pile {
 
 class Hand extends Pile {
     value: number[];
-    
+
     constructor() {
         super(1);
         this.value = [0];
     }
 
     push(inCard: Card): Pile {
-        if(this.currentSize == this.maxSize){
+        if (this.currentSize == this.maxSize) {
             this.maxSize++;
         }
         super.push(inCard);
@@ -147,7 +147,7 @@ class Hand extends Pile {
     }
 
     updateValue(): void {
-        
+
     }
 }
 
@@ -163,6 +163,11 @@ function startGame(): void {
     iSettings = new GameSettings();
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
+
+    Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
+        let myEle = ele as HTMLElement;
+        myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
+    })
 
     var admin1: HTMLButtonElement = document.getElementById('btnAdmin1') as HTMLButtonElement;
     var admin2: HTMLButtonElement = document.getElementById('btnAdmin2') as HTMLButtonElement;
