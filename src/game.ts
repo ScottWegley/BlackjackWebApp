@@ -113,6 +113,10 @@ class Pile {
         }
         return s;
     }
+
+    details = (): string => {
+        return "Pile<" + this.currentSize + "/" + this.maxSize + ">";
+    }
 }
 
 class Deck extends Pile {
@@ -128,7 +132,7 @@ class Deck extends Pile {
 
 let active: boolean = true;
 let iSettings: GameSettings;
-let dealerPile: Pile;
+let dealerPile, discardPile: Pile;
 
 window.addEventListener('load', () => {
     startGame();
@@ -170,6 +174,14 @@ function adminFour(): void {
 }
 
 function gameLoop(): void {
+
+    dealerPile = new Pile(52 * iSettings.decks);
+    for(let i = 0; i < iSettings.decks; i++){
+        dealerPile.add(new Deck());
+    }
+
+    dealerPile.shuffle();
+
     while (active) {
 
         active = false;
