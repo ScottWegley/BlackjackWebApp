@@ -75,19 +75,12 @@ class Pile {
                 input.cards.forEach((inCard: Card) => {
                     this.push(inCard);
                 });
-            } else {
-                console.log("Too big")
             }
         } else if (input != null) {
             if (this.currentSize + input.length <= this.maxSize) {
                 input.forEach((inCard: Card) => {
                     this.push(inCard);
                 });
-            } else {
-                console.log("Cur" + this.currentSize);
-                console.log("In" + input.length);
-                console.log("Max" + this.maxSize);
-                console.log(input)
             }
         }
         return this;
@@ -160,16 +153,7 @@ function startGame(): void {
 }
 
 function testOne(): void {
-    var myPile = new Pile(12);
-    //myPile.add(Card.genCards(12));
-    console.log(myPile.currentSize)
-    var myCard: Card[] | null = Card.genCards(12);
-    if(myCard != null) {
-        myCard.forEach((x: Card) => {
-            console.log(x.toString())
-        })
-        myPile.add(myCard);
-    }
+    
     
 }
 
