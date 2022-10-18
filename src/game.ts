@@ -98,13 +98,15 @@ class Deck extends Pile {
 }
 
 let active: boolean = true;
+let iSettings: GameSettings;
+let dealerPile: Pile;
 
 window.addEventListener('load', () => {
     startGame();
 })
 
 function startGame(): void {
-    var settings = new GameSettings();
+    settings = new GameSettings();
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
 
@@ -139,7 +141,7 @@ function testFour(): void {
 
 function gameLoop(): void {
     while (active) {
-
+        iSettings.decks;
         active = false;
     }
 }

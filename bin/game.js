@@ -73,11 +73,13 @@ class Deck extends Pile {
     }
 }
 let active = true;
+let iSettings;
+let dealerPile;
 window.addEventListener('load', () => {
     startGame();
 });
 function startGame() {
-    var settings = new GameSettings();
+    settings = new GameSettings();
     settings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(settings.toJSON());
     var admin1 = document.getElementById('btnAdmin1');
@@ -100,6 +102,7 @@ function testFour() {
 }
 function gameLoop() {
     while (active) {
+        iSettings.decks;
         active = false;
     }
 }
