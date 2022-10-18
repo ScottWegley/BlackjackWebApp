@@ -105,6 +105,21 @@ class Deck extends Pile {
         });
     }
 }
+class Hand extends Pile {
+    constructor() {
+        super(1);
+        this.value = [0];
+    }
+    push(inCard) {
+        if (this.currentSize == this.maxSize) {
+            this.maxSize++;
+        }
+        super.push(inCard);
+        return this;
+    }
+    updateValue() {
+    }
+}
 let active = true;
 let iSettings;
 let dealerPile, discardPile;
