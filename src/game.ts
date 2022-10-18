@@ -51,7 +51,7 @@ class Card {
         if (cNum < 0) { return null; }
         var outCards: Card[] = new Array<Card>(cNum);
         for (let i = 0; i < cNum; i++) {
-            outCards.push(Card.genCard());
+            outCards[i] = Card.genCard();
         }
         return outCards;
     }
@@ -71,16 +71,23 @@ class Pile {
 
     add(input: Card[] | Pile | null): Pile {
         if (input instanceof Pile) {
-            if (this.currentSize + input.currentSize < this.maxSize) {
+            if (this.currentSize + input.currentSize <= this.maxSize) {
                 input.cards.forEach((inCard: Card) => {
                     this.push(inCard);
                 });
+            } else {
+                console.log("Too big")
             }
         } else if (input != null) {
-            if (this.currentSize + input.length < this.maxSize) {
+            if (this.currentSize + input.length <= this.maxSize) {
                 input.forEach((inCard: Card) => {
                     this.push(inCard);
                 });
+            } else {
+                console.log("Cur" + this.currentSize);
+                console.log("In" + input.length);
+                console.log("Max" + this.maxSize);
+                console.log(input)
             }
         }
         return this;
@@ -135,9 +142,9 @@ window.addEventListener('load', () => {
 })
 
 function startGame(): void {
-    settings = new GameSettings();
-    settings.update(sessionStorage.getItem('blackjacksettings'));
-    console.log(settings.toJSON());
+    iSettings = new GameSettings();
+    iSettings.update(sessionStorage.getItem('blackjacksettings'));
+    console.log(iSettings.toJSON());
 
     var admin1: HTMLButtonElement = document.getElementById('btnAdmin1') as HTMLButtonElement;
     var admin2: HTMLButtonElement = document.getElementById('btnAdmin2') as HTMLButtonElement;
@@ -154,7 +161,16 @@ function startGame(): void {
 
 function testOne(): void {
     var myPile = new Pile(12);
-    myPile.add(Card.genCards(13))
+    //myPile.add(Card.genCards(12));
+    console.log(myPile.currentSize)
+    var myCard: Card[] | null = Card.genCards(12);
+    if(myCard != null) {
+        myCard.forEach((x: Card) => {
+            console.log(x.toString())
+        })
+        myPile.add(myCard);
+    }
+    
 }
 
 function testTwo(): void {
