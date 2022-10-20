@@ -237,7 +237,21 @@ function gameSetup(): void {
 
     dealerPile.shuffle();
 
-    /* while (active) {
+    initialDeal();
+}
+
+function initialDeal(): void {
+    hands.forEach((h: Hand) => {
+        if (h.enabled) {
+            let toDeal = dealerPile.deal()!;
+            h.push(toDeal);
+            h.div.replaceChildren();
+            let outImg = document.createElement('img');
+            outImg.src = cardToPath(toDeal);
+            h.div.appendChild(outImg);
+        }
+    });
+}
 
 function cardToPath(inCard: Card): string {
     let base = './src/data/imgs/';
