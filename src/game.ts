@@ -329,6 +329,18 @@ function updateDisplay(): void {
     btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
 
+    if(dealerHand.evaluate() != 0){
+        pDealer.textContent = 'DHand \n' + dealerHand.toString();
+    }
+
+    if(playerHand1.evaluate() != 0){
+        pPlayer1.textContent = 'P1Hand \n' + playerHand1.toString();
+    }
+
+    if(playerHand2.evaluate() != 0){
+        pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
+    }
+
     btnBet.disabled = roundStarted;
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
     (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
