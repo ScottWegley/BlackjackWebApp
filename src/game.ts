@@ -183,6 +183,14 @@ function startGame(): void {
     var admin3: HTMLButtonElement = document.getElementById('btnAdmin3') as HTMLButtonElement;
     var admin4: HTMLButtonElement = document.getElementById('btnAdmin4') as HTMLButtonElement;
 
+    dealerHand = new Hand(document.getElementById('dealerHand') as HTMLElement);
+    playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLElement);
+    playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLElement);
+
+    playerHand2.enabled = false;
+
+    hands = [dealerHand, playerHand1, playerHand2];
+
     admin1.addEventListener('click', () => { adminOne() });
     admin2.addEventListener('click', () => { adminTwo() });
     admin3.addEventListener('click', () => { adminThree() });
