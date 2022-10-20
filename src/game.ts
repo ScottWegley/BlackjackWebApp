@@ -142,12 +142,12 @@ class Deck extends Pile {
 
 class Hand extends Pile {
     value: number[];
-    div: HTMLElement;
+    div: HTMLDivElement;
     enabled: boolean = true;
 
-    constructor(div: HTMLElement) {
+    constructor(div: HTMLDivElement) {
         super(1);
-        this.value = [0];
+        this.value = [0, 0];
         this.div = div;
     }
 
