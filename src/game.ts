@@ -318,9 +318,16 @@ function updateDisplay(): void {
         let myEle = ele as HTMLElement;
         myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
     });
+    
     hands.forEach((h: Hand) => {
         h.div.style.display = (h.enabled ? 'inline-block' : 'none');
     });
+
+    btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
+    btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
+    btnDD.style.display = ((roundStarted && currentMoney > currentBet) ? 'inline-block' : 'none');
+    btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
+    btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
 
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
     (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
