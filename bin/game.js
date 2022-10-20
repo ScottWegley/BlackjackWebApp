@@ -113,9 +113,11 @@ class Deck extends Pile {
     }
 }
 class Hand extends Pile {
-    constructor() {
+    constructor(div) {
         super(1);
+        this.enabled = true;
         this.value = [0];
+        this.div = div;
     }
     push(inCard) {
         if (this.currentSize == this.maxSize) {
@@ -130,9 +132,9 @@ class Hand extends Pile {
 let iSettings;
 let dealerPile, discardPile;
 let currentMoney, currentBet;
-let isSplit = false;
 let dealerHand, playerHand1, playerHand2;
 let hands;
+let backOfCard = "./src/data/imgs/card_back.png";
 window.addEventListener('load', () => {
     startGame();
 });
@@ -144,9 +146,10 @@ function startGame() {
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');
     var admin4 = document.getElementById('btnAdmin4');
-    dealerHand = document.getElementById('dealerHand');
-    playerHand1 = document.getElementById('playerHand1');
-    playerHand2 = document.getElementById('playerHand2');
+    dealerHand = new Hand(document.getElementById('dealerHand'));
+    playerHand1 = new Hand(document.getElementById('playerHand1'));
+    playerHand2 = new Hand(document.getElementById('playerHand2'));
+    playerHand2.enabled = false;
     hands = [dealerHand, playerHand1, playerHand2];
     admin1.addEventListener('click', () => { adminOne(); });
     admin2.addEventListener('click', () => { adminTwo(); });
@@ -172,6 +175,7 @@ function gameSetup() {
     currentBet = 0;
     updateDisplay();
     dealerPile = new Pile(52 * iSettings.decks);
+    discardPile = new Pile(dealerPile.maxSize);
     for (let i = 0; i < iSettings.decks; i++) {
         dealerPile.add(new Deck());
     }
@@ -179,16 +183,29 @@ function gameSetup() {
     initialDeal();
 }
 function initialDeal() {
-    hands.forEach((myEle) => {
-        myEle.replaceChildren();
+    hands.forEach((h) => {
+        if (h.enabled) {
+            let toDeal = dealerPile.deal();
+            h.push(toDeal);
+            h.div.replaceChildren();
+            let outImg = document.createElement('img');
+            outImg.src = cardToPath(toDeal);
+            h.div.appendChild(outImg);
+        }
     });
+}
+function cardToPath(inCard) {
+    let base = './src/data/imgs/';
+    return base + inCard.toString().toLowerCase().replace(" ", "_") + '.png';
 }
 function updateDisplay() {
     Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
         let myEle = ele;
         myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
     });
-    document.getElementById('playerHand2').style.display = (isSplit ? 'inline-block' : 'none');
+    hands.forEach((h) => {
+        h.div.style.display = (h.enabled ? 'inline-block' : 'none');
+    });
     document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
     document.getElementById('inBet').value = currentBet.toLocaleString();
     document.getElementById('chkAdmin').checked = iSettings.admin;
