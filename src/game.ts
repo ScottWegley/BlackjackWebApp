@@ -86,6 +86,14 @@ class Pile {
         return this;
     }
 
+    deal(): Card | undefined {
+        let returnVal = this.cards.pop();
+        if (returnVal instanceof Card) {
+            this.currentSize--;
+        }
+        return returnVal;
+    }
+
     push(inCard: Card): Pile {
         if (this.currentSize < this.maxSize) {
             this.currentSize++;
