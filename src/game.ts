@@ -318,14 +318,16 @@ function initialDeal(): void {
 
     hands.forEach((h: Hand) => {
         if (h.enabled) {
-            let toDeal = dealerPile.deal()!;
+            toDeal = dealerPile.deal()!;
             h.push(toDeal);
-            h.div.replaceChildren();
-            let outImg = document.createElement('img');
-            outImg.src = cardToPath(toDeal);
+            outImg = document.createElement('img');
+            outImg.src = toDeal.imgPath();
+            outImg.style.width = '55px';
+            outImg.style.height = '80px';
             h.div.appendChild(outImg);
         }
     });
+
 }
 
 function dealerWin():void {
