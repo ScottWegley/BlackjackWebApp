@@ -216,8 +216,31 @@ function startGame(): void {
         updateDisplay();
     });
 
-    gameSetup();
-}
+    btnBet = document.getElementById('btnBet') as HTMLButtonElement;
+    inBet = document.getElementById('inBet') as HTMLInputElement;
+
+    btnBet.addEventListener('click', () => {
+        currentBet = parseInt(inBet.value);
+        if (currentBet <= 0 || currentBet > currentMoney || isNaN(currentBet)) {
+            inBet.value = '0';
+            return;
+        } else {
+            if (!gameStarted) {
+                gameStarted = true;
+                gameSetup();
+            }
+            roundStarted = true;
+            currentMoney -= currentBet;
+            inBet.value = currentBet.toString();
+            updateDisplay();
+        }
+    });
+
+    inBet.addEventListener('change', () => {
+        if (roundStarted) {
+            inBet.value = currentBet.toString();
+        }
+    });
 
 function adminOne(): void {
 
