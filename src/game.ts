@@ -140,10 +140,13 @@ class Deck extends Pile {
 
 class Hand extends Pile {
     value: number[];
+    div: HTMLElement;
+    enabled: boolean = true;
 
-    constructor() {
+    constructor(div: HTMLElement) {
         super(1);
         this.value = [0];
+        this.div = div;
     }
 
     push(inCard: Card): Pile {
@@ -163,6 +166,8 @@ class Hand extends Pile {
 let iSettings: GameSettings;
 let dealerPile: Pile, discardPile: Pile;
 let currentMoney: number, currentBet: number;
+let dealerHand: Hand, playerHand1: Hand, playerHand2: Hand;
+let hands: Hand[];
 
 window.addEventListener('load', () => {
     startGame();
