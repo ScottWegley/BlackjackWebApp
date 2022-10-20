@@ -308,9 +308,12 @@ function initialDeal(): void {
     });
 }
 
-function cardToPath(inCard: Card): string {
-    let base = './src/imgs/';
-    return base + inCard.toString().toLowerCase().replace(" ", "_") + '.png';
+function dealerWin():void {
+
+}
+
+function playerWin():void {
+
 }
 
 function updateDisplay(): void {
