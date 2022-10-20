@@ -160,6 +160,17 @@ class Hand extends Pile {
         return this;
     }
 
+    evaluate(): number {
+        this.updateValue();
+        if (this.value[0] == this.value[1]) {
+            return this.value[0];
+        } else if (this.value[0] > this.value[1] && this.value[0] <= 21) {
+            return this.value[0];
+        }
+        else {
+            return this.value[1];
+        }
+    }
     updateValue(): void {
         this.value = [0, 0]
         this.cards.forEach((x) => {
