@@ -296,6 +296,26 @@ function gameSetup(): void {
 }
 
 function initialDeal(): void {
+
+    let toDeal = dealerPile.deal()!;
+    dealerHand.push(toDeal);
+    dealerHand.div.replaceChildren();
+    let outImg = document.createElement('img');
+    toDeal.visible = false; //Deal hidden img to dealer
+    outImg.src = toDeal.imgPath();
+    outImg.style.width = '55px';
+    outImg.style.height = '80px';
+    dealerHand.div.appendChild(outImg);
+
+    toDeal = dealerPile.deal()!;
+    playerHand1.push(toDeal);
+    playerHand1.div.replaceChildren();
+    outImg = document.createElement('img');
+    outImg.src = toDeal.imgPath(); //Deal regular img to player
+    outImg.style.width = '55px';
+    outImg.style.height = '80px';
+    playerHand1.div.appendChild(outImg);
+
     hands.forEach((h: Hand) => {
         if (h.enabled) {
             let toDeal = dealerPile.deal()!;
