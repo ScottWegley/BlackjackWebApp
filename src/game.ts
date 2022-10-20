@@ -263,6 +263,9 @@ function updateDisplay(): void {
         let myEle = ele as HTMLElement;
         myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
     });
+    hands.forEach((h: Hand) => {
+        h.div.style.display = (h.enabled ? 'inline-block' : 'none');
+    });
 
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
     (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
