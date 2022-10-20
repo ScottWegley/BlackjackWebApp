@@ -196,14 +196,14 @@ function startGame(): void {
     admin3.addEventListener('click', () => { adminThree() });
     admin4.addEventListener('click', () => { adminFour() });
 
-    gameSetup();
-
     var chkAdmin: HTMLInputElement = document.getElementById('chkAdmin') as HTMLInputElement;
 
     chkAdmin.addEventListener('change', () => {
         iSettings.admin = chkAdmin.checked;
         updateDisplay();
-    })
+    });
+
+    gameSetup();
 }
 
 function adminOne(): void {
