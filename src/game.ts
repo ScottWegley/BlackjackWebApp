@@ -329,6 +329,7 @@ function updateDisplay(): void {
     btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
 
+    btnBet.disabled = roundStarted;
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
     (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
     (document.getElementById('chkAdmin') as HTMLInputElement).checked = iSettings.admin;
