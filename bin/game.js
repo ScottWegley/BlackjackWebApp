@@ -195,7 +195,7 @@ function initialDeal() {
     });
 }
 function cardToPath(inCard) {
-    let base = './src/data/imgs/';
+    let base = './src/imgs/';
     return base + inCard.toString().toLowerCase().replace(" ", "_") + '.png';
 }
 function updateDisplay() {

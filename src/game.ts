@@ -255,7 +255,7 @@ function initialDeal(): void {
 }
 
 function cardToPath(inCard: Card): string {
-    let base = './src/data/imgs/';
+    let base = './src/imgs/';
     return base + inCard.toString().toLowerCase().replace(" ", "_") + '.png';
 }
 
