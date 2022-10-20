@@ -10,6 +10,7 @@ body {
 
 .displayElement {
     display: inline-block;
+    white-space: pre-wrap;
 }
 
 #gameDetails {
