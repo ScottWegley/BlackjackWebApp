@@ -187,18 +187,22 @@ function startGame(): void {
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
 
-    var admin1: HTMLButtonElement = document.getElementById('btnAdmin1') as HTMLButtonElement;
-    var admin2: HTMLButtonElement = document.getElementById('btnAdmin2') as HTMLButtonElement;
-    var admin3: HTMLButtonElement = document.getElementById('btnAdmin3') as HTMLButtonElement;
-    var admin4: HTMLButtonElement = document.getElementById('btnAdmin4') as HTMLButtonElement;
+    gameStarted = false;
+    roundStarted = false;
 
-    dealerHand = new Hand(document.getElementById('dealerHand') as HTMLElement);
-    playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLElement);
-    playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLElement);
+    admin1 = document.getElementById('btnAdmin1') as HTMLButtonElement;
+    admin2 = document.getElementById('btnAdmin2') as HTMLButtonElement;
+    admin3 = document.getElementById('btnAdmin3') as HTMLButtonElement;
+    admin4 = document.getElementById('btnAdmin4') as HTMLButtonElement;
 
-    playerHand2.enabled = false;
+    btnStand = document.getElementById('btnStand') as HTMLButtonElement;
+    btnHit = document.getElementById('btnHit') as HTMLButtonElement;
+    btnDD = document.getElementById('btnDD') as HTMLButtonElement;
+    btnSplit = document.getElementById('btnSplit') as HTMLButtonElement;
+    btnSurrender = document.getElementById('btnSurrender') as HTMLButtonElement;
 
-    hands = [dealerHand, playerHand1, playerHand2];
+    gStarted = document.getElementById('gStarted') as HTMLElement;
+    rStarted = document.getElementById('rStarted') as HTMLElement;
 
     admin1.addEventListener('click', () => { adminOne() });
     admin2.addEventListener('click', () => { adminTwo() });
