@@ -230,6 +230,7 @@ function gameSetup(): void {
 
     updateDisplay();
     dealerPile = new Pile(52 * iSettings.decks);
+    discardPile = new Pile(dealerPile.maxSize);
     for (let i = 0; i < iSettings.decks; i++) {
         dealerPile.add(new Deck());
     }
