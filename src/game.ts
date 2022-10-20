@@ -23,6 +23,7 @@ class GameSettings {
     }
 }
 
+const backOfCard: string = "./src/imgs/card_back.png";
 
 const suits = ["Clubs", "Diamonds", "Spades", "Hearts"] as const;
 type Suit = typeof suits[number]; //Weird way of doing it but allows mes to iterate through so.
