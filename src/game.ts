@@ -156,6 +156,7 @@ class Hand extends Pile {
             this.maxSize++;
         }
         super.push(inCard);
+        this.updateValue();
         return this;
     }
 
