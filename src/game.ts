@@ -171,6 +171,13 @@ class Hand extends Pile {
             return this.value[1];
         }
     }
+
+    toString(): string {
+        let s: string = 'Hand Values: ' + ((this.value[0] == this.value[1]) ? this.value[0] : this.value[0] + ', ' + this.value[1]);
+
+        return s + '\n' + super.toString();
+    }
+
     updateValue(): void {
         this.value = [0, 0]
         this.cards.forEach((x) => {
