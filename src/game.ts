@@ -41,7 +41,7 @@ class Card {
         this.suit = inSuit;
     }
 
-    toString = (): string => { //Override to string.
+    toString(): string { //Override to string.
         return this.value + " of " + this.suit;
     }
 
@@ -56,6 +56,10 @@ class Card {
             outCards[i] = Card.genCard();
         }
         return outCards;
+    }
+
+    imgPath(): string {
+        return (this.visible ? ('./src/imgs/' + (this.value + '_of_' + this.suit).toLowerCase() + '.png') : (backOfCard));
     }
 }
 
@@ -116,7 +120,7 @@ class Pile {
         return this;
     }
 
-    toString = (): string => {
+    toString(): string {
         var s: string = "";
         for (let i = 0; i < this.currentSize; i++) {
             s += this.cards[i].toString() + "\n";
@@ -124,7 +128,7 @@ class Pile {
         return s;
     }
 
-    details = (): string => {
+    details(): string {
         return "Pile<" + this.currentSize + "/" + this.maxSize + ">";
     }
 }
@@ -342,10 +346,6 @@ function adminFour(): void {
 
 function gameSetup(): void {
 
-    currentMoney = iSettings.cashStart;
-    currentBet = 0;
-
-    updateDisplay();
     dealerPile = new Pile(52 * iSettings.decks);
     discardPile = new Pile(dealerPile.maxSize);
     for (let i = 0; i < iSettings.decks; i++) {
