@@ -328,6 +328,15 @@ function initialDeal(): void {
         }
     });
 
+    if(dealerHand.evaluate() == 21){
+        dealerWin();
+        return;
+    }
+    if(playerHand1.evaluate() == 21){
+        playerWin();
+        return;
+    }
+    return;
 }
 
 function dealerWin():void {
