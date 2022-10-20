@@ -13,12 +13,13 @@ body {
     white-space: pre-wrap;
 }
 
-#gameDetails {
+#gameDetails, #adminPanel, #adminDisplayPanel {
     margin: auto;
     background-color: gray;
     width: 50%;
     text-align: center;
     color: black;
+    border-radius: 25px;
 }
 
 #inBet {
