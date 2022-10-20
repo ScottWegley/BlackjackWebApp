@@ -160,7 +160,50 @@ class Hand extends Pile {
     }
 
     updateValue(): void {
-
+        this.value = [0, 0]
+        this.cards.forEach((x) => {
+            switch (x.value) {
+                case 'Ace':
+                    this.value[0] += 1;
+                    this.value[1] += 11;
+                    break;
+                case 'Two':
+                    this.value[0] += 2;
+                    this.value[1] += 2;
+                    break;
+                case 'Three':
+                    this.value[0] += 3;
+                    this.value[1] += 3;
+                    break;
+                case 'Four':
+                    this.value[0] += 4;
+                    this.value[1] += 4;
+                    break;
+                case 'Five':
+                    this.value[0] += 5;
+                    this.value[1] += 5;
+                    break;
+                case 'Six':
+                    this.value[0] += 6;
+                    this.value[1] += 6;
+                    break;
+                case 'Seven':
+                    this.value[0] += 7;
+                    this.value[1] += 7;
+                    break;
+                case 'Eight':
+                    this.value[0] += 8;
+                    this.value[1] += 8;
+                    break;
+                case 'Nine':
+                    this.value[0] += 9;
+                    this.value[1] += 9;
+                    break;
+                default:
+                    this.value[0] += 10;
+                    this.value[1] += 10;
+            }
+        });
     }
 }
 
