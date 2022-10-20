@@ -168,6 +168,7 @@ let dealerPile: Pile, discardPile: Pile;
 let currentMoney: number, currentBet: number;
 let dealerHand: Hand, playerHand1: Hand, playerHand2: Hand;
 let hands: Hand[];
+let backOfCard:string = "./src/data/imgs/card_back.png"
 
 window.addEventListener('load', () => {
     startGame();
