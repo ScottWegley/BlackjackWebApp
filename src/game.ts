@@ -239,8 +239,9 @@ function gameSetup(): void {
 
     /* while (active) {
 
-        active = false;
-    } */
+function cardToPath(inCard: Card): string {
+    let base = './src/data/imgs/';
+    return base;
 }
 
 function updateDisplay(): void {
