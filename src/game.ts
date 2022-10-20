@@ -342,6 +342,10 @@ function updateDisplay(): void {
     }
 
     btnBet.disabled = roundStarted;
+
+    gStarted.textContent = "Game Started: " + gameStarted.valueOf();
+    rStarted.textContent = "Round Started: " + roundStarted.valueOf();
+
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
     (document.getElementById('inBet') as HTMLInputElement).value = currentBet.toLocaleString();
     (document.getElementById('chkAdmin') as HTMLInputElement).checked = iSettings.admin;
