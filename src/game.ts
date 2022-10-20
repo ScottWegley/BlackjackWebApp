@@ -293,6 +293,7 @@ function gameSetup(): void {
     dealerPile.shuffle();
 
     initialDeal();
+    updateDisplay();
 }
 
 function initialDeal(): void {
