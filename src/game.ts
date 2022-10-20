@@ -34,6 +34,7 @@ type Value = typeof values[number];
 class Card {
     value: Value;
     suit: Suit;
+    visible: Boolean = true;
 
     constructor(inValue: Value, inSuit: Suit) {
         this.value = inValue;
