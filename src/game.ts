@@ -242,6 +242,25 @@ function startGame(): void {
         }
     });
 
+    dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement);
+    playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement);
+    playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLDivElement);
+
+    pDealer = document.getElementById('pDealer') as HTMLElement;
+    pPlayer1 = document.getElementById('pPlayer1') as HTMLElement;
+    pPlayer2 = document.getElementById('pPlayer2') as HTMLElement;
+
+    playerHand2.enabled = false;
+
+    hands = [dealerHand, playerHand1, playerHand2];
+
+    currentMoney = iSettings.cashStart;
+    currentBet = 0;
+
+    updateDisplay();
+
+}
+
 function adminOne(): void {
 
 
