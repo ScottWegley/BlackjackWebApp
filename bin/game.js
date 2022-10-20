@@ -74,6 +74,13 @@ class Pile {
         }
         return this;
     }
+    deal() {
+        let returnVal = this.cards.pop();
+        if (returnVal instanceof Card) {
+            this.currentSize--;
+        }
+        return returnVal;
+    }
     push(inCard) {
         if (this.currentSize < this.maxSize) {
             this.currentSize++;
@@ -123,6 +130,9 @@ class Hand extends Pile {
 let iSettings;
 let dealerPile, discardPile;
 let currentMoney, currentBet;
+let isSplit = false;
+let dealerHand, playerHand1, playerHand2;
+let hands;
 window.addEventListener('load', () => {
     startGame();
 });
@@ -134,16 +144,20 @@ function startGame() {
     var admin2 = document.getElementById('btnAdmin2');
     var admin3 = document.getElementById('btnAdmin3');
     var admin4 = document.getElementById('btnAdmin4');
+    dealerHand = document.getElementById('dealerHand');
+    playerHand1 = document.getElementById('playerHand1');
+    playerHand2 = document.getElementById('playerHand2');
+    hands = [dealerHand, playerHand1, playerHand2];
     admin1.addEventListener('click', () => { adminOne(); });
     admin2.addEventListener('click', () => { adminTwo(); });
     admin3.addEventListener('click', () => { adminThree(); });
     admin4.addEventListener('click', () => { adminFour(); });
-    gameSetup();
     var chkAdmin = document.getElementById('chkAdmin');
     chkAdmin.addEventListener('change', () => {
         iSettings.admin = chkAdmin.checked;
         updateDisplay();
     });
+    gameSetup();
 }
 function adminOne() {
 }
@@ -162,12 +176,19 @@ function gameSetup() {
         dealerPile.add(new Deck());
     }
     dealerPile.shuffle();
+    initialDeal();
+}
+function initialDeal() {
+    hands.forEach((myEle) => {
+        myEle.replaceChildren();
+    });
 }
 function updateDisplay() {
     Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
         let myEle = ele;
         myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
     });
+    document.getElementById('playerHand2').style.display = (isSplit ? 'inline-block' : 'none');
     document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
     document.getElementById('inBet').value = currentBet.toLocaleString();
     document.getElementById('chkAdmin').checked = iSettings.admin;
