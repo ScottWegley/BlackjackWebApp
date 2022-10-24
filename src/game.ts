@@ -31,6 +31,8 @@ type Suit = typeof suits[number]; //Weird way of doing it but allows mes to iter
 const values = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"] as const;
 type Value = typeof values[number];
 
+type Owner = "DEALER" | "PLAYER";
+
 class Card {
     value: Value;
     suit: Suit;
@@ -166,11 +168,13 @@ class Hand extends Pile {
     value: number[];
     div: HTMLDivElement;
     enabled: boolean = true;
+    owner: Owner;
 
-    constructor(div: HTMLDivElement) {
+    constructor(div: HTMLDivElement, owner: Owner) {
         super(1);
         this.value = [0, 0];
         this.div = div;
+        this.owner = owner;
     }
 
     pop(): Card | undefined {
@@ -336,9 +340,9 @@ function startGame(): void {
         updateDisplay();
     });
 
-    dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement);
-    playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement);
-    playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLDivElement);
+    dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement, 'DEALER');
+    playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement, 'PLAYER');
+    playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLDivElement, 'PLAYER');
 
     pDealer = document.getElementById('pDealer') as HTMLElement;
     pPlayer1 = document.getElementById('pPlayer1') as HTMLElement;
