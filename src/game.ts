@@ -382,7 +382,11 @@ function gameSetup(): void {
 }
 
 function dealHands(): void {
-
+    if(dealerPile.currentSize <= 4) {
+        while(discardPile.currentSize > 0){
+            dealerPile.push(discardPile.pop()!);
+        }
+    }
     hands.forEach((h: Hand) => {
         if (h.enabled) {
             h.push(dealerPile.deal()!).push(dealerPile.deal()!);
