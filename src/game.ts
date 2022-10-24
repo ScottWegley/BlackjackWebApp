@@ -351,6 +351,8 @@ function startGame(): void {
     currentMoney = iSettings.cashStart;
     currentBet = 0;
 
+    gameSetup();
+
     updateDisplay();
 
 }
