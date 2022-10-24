@@ -471,7 +471,7 @@ function updateDisplay(): void {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
 
-    btnBet.disabled = roundStarted;
+    btnBet.disabled = inBet.disabled = roundStarted;
 
     gStarted.textContent = "Game Started: " + gameStarted.valueOf();
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
