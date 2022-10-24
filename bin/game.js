@@ -316,6 +316,11 @@ function gameSetup() {
     dealerPile.shuffle();
 }
 function dealHands() {
+    if (dealerPile.currentSize <= 4) {
+        while (discardPile.currentSize > 0) {
+            dealerPile.push(discardPile.pop());
+        }
+    }
     hands.forEach((h) => {
         if (h.enabled) {
             h.push(dealerPile.deal()).push(dealerPile.deal());
@@ -355,6 +360,7 @@ function prepNextRound() {
             discardPile.push(h.pop());
         }
     });
+    playerHand2.enabled = false;
     updateDisplay();
 }
 function updateDisplay() {
