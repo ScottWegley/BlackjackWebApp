@@ -268,7 +268,6 @@ let dealerPile: Pile, discardPile: Pile;
 let currentMoney: number, currentBet: number;
 let dealerHand: Hand, playerHand1: Hand, playerHand2: Hand;
 let hands: Hand[];
-let gameStarted: boolean;
 let roundStarted: boolean;
 let btnBet: HTMLButtonElement;
 let inBet: HTMLInputElement;
@@ -285,7 +284,6 @@ function startGame(): void {
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
 
-    gameStarted = false;
     roundStarted = false;
 
     admin1 = document.getElementById('btnAdmin1') as HTMLButtonElement;
@@ -323,10 +321,6 @@ function startGame(): void {
             inBet.value = '0';
             return;
         } else {
-            if (!gameStarted) {
-                gameStarted = true;
-                gameSetup();
-            }
             roundStarted = true;
             currentMoney -= currentBet;
             inBet.value = currentBet.toString();
@@ -378,7 +372,6 @@ function adminFour(): void {
 }
 
 function gameSetup(): void {
-
     dealerPile = new Pile(52 * iSettings.decks);
     discardPile = new Pile(dealerPile.maxSize);
     for (let i = 0; i < iSettings.decks; i++) {
@@ -386,9 +379,6 @@ function gameSetup(): void {
     }
 
     dealerPile.shuffle();
-
-    initialDeal();
-    updateDisplay();
 }
 
 function dealHands(): void {
@@ -483,7 +473,6 @@ function updateDisplay(): void {
 
     btnBet.disabled = inBet.disabled = roundStarted;
 
-    gStarted.textContent = "Game Started: " + gameStarted.valueOf();
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
 
     (document.getElementById('playerMoney') as HTMLElement).innerText = "$" + currentMoney.toLocaleString();
