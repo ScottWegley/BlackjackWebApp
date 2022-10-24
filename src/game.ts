@@ -459,15 +459,17 @@ function updateDisplay(): void {
     btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
 
-    if(dealerHand.evaluate() != 0){
+    pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
+
+    if (dealerHand.evaluate() != 0) {
         pDealer.textContent = 'DHand \n' + dealerHand.toString();
     }
 
-    if(playerHand1.evaluate() != 0){
+    if (playerHand1.evaluate() != 0) {
         pPlayer1.textContent = 'P1Hand \n' + playerHand1.toString();
     }
 
-    if(playerHand2.evaluate() != 0){
+    if (playerHand2.evaluate() != 0) {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
 
