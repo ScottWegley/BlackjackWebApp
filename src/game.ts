@@ -74,6 +74,13 @@ class Pile {
         this.currentSize = 0;
     }
 
+    pop(): Card | undefined {
+        if (this.currentSize <= 0) {
+            return;
+        }
+        this.currentSize--;
+        return this.cards.pop();
+    }
 
     add(input: Card[] | Pile | null): Pile {
         if (input instanceof Pile) {
