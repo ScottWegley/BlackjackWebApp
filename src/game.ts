@@ -135,6 +135,15 @@ class Pile {
         return s;
     }
 
+    toStringList(): string {
+        var s: string = "";
+        for (let i = 0; i < this.currentSize - 1; i++) {
+            s += this.cards[i].toString() + ", "
+        }
+        s += "and " + this.cards[this.currentSize - 1].toString();
+        return s;
+    }
+
     details(): string {
         return "Pile<" + this.currentSize + "/" + this.maxSize + ">";
     }
