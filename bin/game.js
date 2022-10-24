@@ -52,6 +52,13 @@ class Pile {
         this.cards = new Array(this.maxSize);
         this.currentSize = 0;
     }
+    pop() {
+        if (this.currentSize <= 0) {
+            return;
+        }
+        this.currentSize--;
+        return this.cards.pop();
+    }
     add(input) {
         if (input instanceof Pile) {
             if (this.currentSize + input.currentSize <= this.maxSize) {
@@ -97,10 +104,22 @@ class Pile {
         return this;
     }
     toString() {
+        if (this.currentSize == 0)
+            return '';
         var s = "";
         for (let i = 0; i < this.currentSize; i++) {
             s += this.cards[i].toString() + "\n";
         }
+        return s;
+    }
+    toStringList() {
+        if (this.currentSize == 0)
+            return '';
+        var s = "";
+        for (let i = 0; i < this.currentSize - 1; i++) {
+            s += this.cards[i].toString() + ", ";
+        }
+        s += "and " + this.cards[this.currentSize - 1].toString();
         return s;
     }
     details() {
@@ -118,11 +137,20 @@ class Deck extends Pile {
     }
 }
 class Hand extends Pile {
-    constructor(div) {
+    constructor(div, owner) {
         super(1);
         this.enabled = true;
         this.value = [0, 0];
         this.div = div;
+        this.owner = owner;
+    }
+    pop() {
+        let returnVal = super.pop();
+        if (returnVal instanceof Card) {
+            return returnVal;
+        }
+        this.updateValue();
+        return;
     }
     push(inCard) {
         if (this.currentSize == this.maxSize) {
@@ -145,6 +173,8 @@ class Hand extends Pile {
         }
     }
     toString() {
+        if (this.currentSize == 0)
+            return '';
         let s = 'Hand Values: ' + ((this.value[0] == this.value[1]) ? this.value[0] : this.value[0] + ', ' + this.value[1]);
         return s + '\n' + super.toString();
     }
@@ -200,7 +230,6 @@ let dealerPile, discardPile;
 let currentMoney, currentBet;
 let dealerHand, playerHand1, playerHand2;
 let hands;
-let gameStarted;
 let roundStarted;
 let btnBet;
 let inBet;
@@ -214,7 +243,6 @@ function startGame() {
     iSettings = new GameSettings();
     iSettings.update(sessionStorage.getItem('blackjacksettings'));
     console.log(iSettings.toJSON());
-    gameStarted = false;
     roundStarted = false;
     admin1 = document.getElementById('btnAdmin1');
     admin2 = document.getElementById('btnAdmin2');
@@ -245,24 +273,20 @@ function startGame() {
             return;
         }
         else {
-            if (!gameStarted) {
-                gameStarted = true;
-                gameSetup();
-            }
             roundStarted = true;
             currentMoney -= currentBet;
             inBet.value = currentBet.toString();
-            updateDisplay();
+            dealHands();
         }
     });
-    inBet.addEventListener('change', () => {
-        if (roundStarted) {
-            inBet.value = currentBet.toString();
-        }
+    btnSplit.addEventListener('click', () => {
+        playerHand2.enabled = true;
+        playerHand2.push(playerHand1.pop());
+        updateDisplay();
     });
-    dealerHand = new Hand(document.getElementById('dealerHand'));
-    playerHand1 = new Hand(document.getElementById('playerHand1'));
-    playerHand2 = new Hand(document.getElementById('playerHand2'));
+    dealerHand = new Hand(document.getElementById('dealerHand'), 'DEALER');
+    playerHand1 = new Hand(document.getElementById('playerHand1'), 'PLAYER');
+    playerHand2 = new Hand(document.getElementById('playerHand2'), 'PLAYER');
     pDealer = document.getElementById('pDealer');
     pPlayer1 = document.getElementById('pPlayer1');
     pPlayer2 = document.getElementById('pPlayer2');
@@ -270,11 +294,14 @@ function startGame() {
     hands = [dealerHand, playerHand1, playerHand2];
     currentMoney = iSettings.cashStart;
     currentBet = 0;
+    gameSetup();
     updateDisplay();
 }
 function adminOne() {
+    dealerWin();
 }
 function adminTwo() {
+    playerWin();
 }
 function adminThree() {
 }
@@ -287,51 +314,48 @@ function gameSetup() {
         dealerPile.add(new Deck());
     }
     dealerPile.shuffle();
-    initialDeal();
-    updateDisplay();
 }
-function initialDeal() {
-    let toDeal = dealerPile.deal();
-    dealerHand.push(toDeal);
-    dealerHand.div.replaceChildren();
-    let outImg = document.createElement('img');
-    toDeal.visible = false;
-    outImg.src = toDeal.imgPath();
-    outImg.style.width = '55px';
-    outImg.style.height = '80px';
-    dealerHand.div.appendChild(outImg);
-    toDeal = dealerPile.deal();
-    playerHand1.push(toDeal);
-    playerHand1.div.replaceChildren();
-    outImg = document.createElement('img');
-    outImg.src = toDeal.imgPath();
-    outImg.style.width = '55px';
-    outImg.style.height = '80px';
-    playerHand1.div.appendChild(outImg);
+function dealHands() {
     hands.forEach((h) => {
         if (h.enabled) {
-            toDeal = dealerPile.deal();
-            h.push(toDeal);
-            outImg = document.createElement('img');
-            outImg.src = toDeal.imgPath();
-            outImg.style.width = '55px';
-            outImg.style.height = '80px';
-            h.div.appendChild(outImg);
+            h.push(dealerPile.deal()).push(dealerPile.deal());
         }
     });
+    dealerHand.cards[0].visible = false;
+    checkForBlackjack();
+    updateDisplay();
+    return;
+}
+function checkForBlackjack() {
     if (dealerHand.evaluate() == 21) {
         dealerWin();
         return;
     }
     if (playerHand1.evaluate() == 21) {
-        playerWin();
+        playerWin(true);
         return;
     }
-    return;
 }
 function dealerWin() {
+    alert("The dealer wins this round with a " + dealerHand.evaluate().toString() + " from a " + dealerHand.toStringList() + "!");
+    prepNextRound();
 }
-function playerWin() {
+function playerWin(blackjack) {
+    let winningHand = ((playerHand1.evaluate() > playerHand2.evaluate()) ? playerHand1 : playerHand2);
+    let spoils = ((blackjack) ? 2.5 * currentBet : 2 * currentBet);
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + winningHand.evaluate().toString() + " from " + winningHand.toStringList() + "!");
+    currentMoney += spoils;
+    prepNextRound();
+}
+function prepNextRound() {
+    currentBet = 0;
+    roundStarted = false;
+    hands.forEach((h) => {
+        while (!(h.currentSize == 0)) {
+            discardPile.push(h.pop());
+        }
+    });
+    updateDisplay();
 }
 function updateDisplay() {
     Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
@@ -340,12 +364,24 @@ function updateDisplay() {
     });
     hands.forEach((h) => {
         h.div.style.display = (h.enabled ? 'inline-block' : 'none');
+        h.div.replaceChildren();
+        h.cards.forEach((c) => {
+            let outImg = document.createElement('img');
+            outImg.src = c.imgPath();
+            outImg.style.width = '55px';
+            outImg.style.height = '80px';
+            if (!c.visible) {
+                outImg.setAttribute('id', 'hiddenImg');
+            }
+            h.div.appendChild(outImg);
+        });
     });
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
     btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
     btnDD.style.display = ((roundStarted && currentMoney > currentBet) ? 'inline-block' : 'none');
     btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
+    pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
     if (dealerHand.evaluate() != 0) {
         pDealer.textContent = 'DHand \n' + dealerHand.toString();
     }
@@ -355,8 +391,7 @@ function updateDisplay() {
     if (playerHand2.evaluate() != 0) {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
-    btnBet.disabled = roundStarted;
-    gStarted.textContent = "Game Started: " + gameStarted.valueOf();
+    btnBet.disabled = inBet.disabled = roundStarted;
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
     document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
     document.getElementById('inBet').value = currentBet.toLocaleString();
