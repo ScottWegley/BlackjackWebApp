@@ -326,7 +326,7 @@ function startGame(): void {
             roundStarted = true;
             currentMoney -= currentBet;
             inBet.value = currentBet.toString();
-            updateDisplay();
+            dealHands();
         }
     });
 
