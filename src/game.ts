@@ -128,6 +128,7 @@ class Pile {
     }
 
     toString(): string {
+        if (this.currentSize == 0) return '';
         var s: string = "";
         for (let i = 0; i < this.currentSize; i++) {
             s += this.cards[i].toString() + "\n";
@@ -136,6 +137,7 @@ class Pile {
     }
 
     toStringList(): string {
+        if (this.currentSize == 0) return '';
         var s: string = "";
         for (let i = 0; i < this.currentSize - 1; i++) {
             s += this.cards[i].toString() + ", "
@@ -193,6 +195,7 @@ class Hand extends Pile {
     }
 
     toString(): string {
+        if (this.currentSize == 0) return '';
         let s: string = 'Hand Values: ' + ((this.value[0] == this.value[1]) ? this.value[0] : this.value[0] + ', ' + this.value[1]);
 
         return s + '\n' + super.toString();
