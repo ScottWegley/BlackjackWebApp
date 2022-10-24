@@ -438,6 +438,12 @@ function initialDeal(): void {
 
 function dealerWin():void {
 
+function playerWin(blackjack?:boolean): void {
+    let winningHand: Hand = ((playerHand1.evaluate() > playerHand2.evaluate()) ? playerHand1 : playerHand2);
+    let spoils: number = ((blackjack) ? 2.5 * currentBet : 2 * currentBet)
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + winningHand.evaluate().toString() + " from " + winningHand.toStringList() + "!");
+    currentMoney += spoils;
+    prepNextRound();
 }
 
 function prepNextRound(): void {
