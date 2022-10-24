@@ -436,7 +436,10 @@ function initialDeal(): void {
     return;
 }
 
-function dealerWin():void {
+function dealerWin(): void {
+    alert("The dealer wins this round with a " + dealerHand.evaluate().toString() + " from a " + dealerHand.toStringList() + "!");
+    prepNextRound();
+}
 
 function playerWin(blackjack?:boolean): void {
     let winningHand: Hand = ((playerHand1.evaluate() > playerHand2.evaluate()) ? playerHand1 : playerHand2);
