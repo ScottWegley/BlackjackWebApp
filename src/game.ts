@@ -425,15 +425,16 @@ function initialDeal(): void {
         }
     });
 
-    if(dealerHand.evaluate() == 21){
+function checkForBlackjack(): void {
+    if (dealerHand.evaluate() == 21) {
         dealerWin();
         return;
     }
     if(playerHand1.evaluate() == 21){
-        playerWin();
+        playerWin(true);
         return;
     }
-    return;
+
 }
 
 function dealerWin(): void {
