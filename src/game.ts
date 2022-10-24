@@ -362,12 +362,11 @@ function startGame(): void {
 }
 
 function adminOne(): void {
-
-
+    dealerWin();
 }
 
 function adminTwo(): void {
-
+    playerWin();
 }
 
 function adminThree(): void {
