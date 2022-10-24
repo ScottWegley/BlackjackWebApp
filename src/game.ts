@@ -440,8 +440,15 @@ function dealerWin():void {
 
 }
 
-function playerWin():void {
-
+function prepNextRound(): void {
+    currentBet = 0;
+    roundStarted = false;
+    hands.forEach((h: Hand) => {
+        while (!(h.currentSize == 0)) {
+            discardPile.push(h.pop()!)
+        }
+    });
+    updateDisplay();
 }
 
 function updateDisplay(): void {
