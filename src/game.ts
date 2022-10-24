@@ -173,6 +173,15 @@ class Hand extends Pile {
         this.div = div;
     }
 
+    pop(): Card | undefined {
+        let returnVal = super.pop();
+        if (returnVal instanceof Card) {
+            return returnVal;
+        }
+        this.updateValue();
+        return;
+    }
+
     push(inCard: Card): Pile {
         if (this.currentSize == this.maxSize) {
             this.maxSize++;
