@@ -448,9 +448,18 @@ function updateDisplay(): void {
         let myEle = ele as HTMLElement;
         myEle.style.display = (iSettings.admin ? 'inline-block' : 'none');
     });
-    
+
     hands.forEach((h: Hand) => {
         h.div.style.display = (h.enabled ? 'inline-block' : 'none');
+        h.div.replaceChildren();
+        h.cards.forEach((c: Card) => {
+            let outImg: HTMLImageElement = document.createElement('img');
+            outImg.src = c.imgPath();
+            outImg.style.width = '55px';
+            outImg.style.height = '80px';
+            if (!c.visible) { outImg.setAttribute('id', 'hiddenImg'); }
+            h.div.appendChild(outImg);
+        });
     });
 
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
