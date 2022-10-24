@@ -429,6 +429,7 @@ function prepNextRound(): void {
             discardPile.push(h.pop()!)
         }
     });
+    playerHand2.enabled = false;
     updateDisplay();
 }
 
