@@ -330,10 +330,10 @@ function startGame(): void {
         }
     });
 
-    inBet.addEventListener('change', () => {
-        if (roundStarted) {
-            inBet.value = currentBet.toString();
-        }
+    btnSplit.addEventListener('click', () => {
+        playerHand2.enabled = true;
+        playerHand2.push(playerHand1.pop()!);
+        updateDisplay();
     });
 
     dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement);
