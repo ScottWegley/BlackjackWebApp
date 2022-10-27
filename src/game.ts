@@ -169,6 +169,7 @@ class Hand extends Pile {
     div: HTMLDivElement;
     enabled: boolean = true;
     owner: Owner;
+    busted: boolean = false;
 
     constructor(div: HTMLDivElement, owner: Owner) {
         super(1);
