@@ -259,7 +259,13 @@ class Hand extends Pile {
     }
 }
 
-//let active: boolean = true;
+class HandManager {
+    h1: Hand;
+    h2: Hand;
+    ch: Hand;
+}
+
+
 let iSettings: GameSettings;
 let dealerPile: Pile, discardPile: Pile;
 let currentMoney: number, currentBet: number;
