@@ -399,6 +399,19 @@ function adminFour(): void {
 
 }
 
+function checkForLoss(): void {
+    if (!playerHand2.enabled) {
+        if (playerHand1.busted) {
+            dealerWin();
+        }
+    } else {
+        if (playerHand1.busted && playerHand2.busted) {
+            dealerWin();
+        }
+    }
+    return;
+}
+
 function dealTo(h: Hand, i?: number): void {
     if (typeof i != 'number') { i = 1; }
     if (dealerPile.currentSize <= 1) {
