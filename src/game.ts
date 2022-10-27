@@ -544,8 +544,11 @@ function prepNextRound(): void {
         }
     });
     playerHand2.enabled = false;
+    hm.ch = playerHand1;
+    hm.first = true;
     updateDisplay();
 }
+
 
 function updateDisplay(): void {
     Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
