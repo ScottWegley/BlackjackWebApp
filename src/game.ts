@@ -649,6 +649,7 @@ function updateDisplay(): void {
 
     inBet.value = (roundStarted ? currentBet.toLocaleString() : inBet.value) ;
     btnBet.disabled = inBet.disabled = roundStarted;
+    bet2.textContent = '2nd Bet: $' + currentBets[1].toLocaleString();
 
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
 
