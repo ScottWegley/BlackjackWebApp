@@ -647,7 +647,18 @@ function updateDisplay(): void {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
 
-    inBet.value = (roundStarted ? currentBet.toLocaleString() : inBet.value) ;
+    while (pDealer.offsetHeight < Math.max(pPlayer1.offsetHeight, pPlayer2.offsetHeight)) {
+        pDealer.textContent += '\n';
+    }
+
+    while (pPlayer1.offsetHeight < Math.max(pDealer.offsetHeight, pPlayer2.offsetHeight)) {
+        pPlayer1.textContent += '\n';
+    }
+
+    while (pPlayer2.offsetHeight < Math.max(pPlayer1.offsetHeight, pDealer.offsetHeight)) {
+        pPlayer2.textContent += '\n';
+    }
+
     btnBet.disabled = inBet.disabled = roundStarted;
     bet2.textContent = '2nd Bet: $' + currentBets[1].toLocaleString();
 
