@@ -263,6 +263,28 @@ class HandManager {
     h1: Hand;
     h2: Hand;
     ch: Hand;
+    first: boolean;
+
+    constructor(h1: Hand, h2: Hand) {
+        this.h1 = h1;
+        this.h2 = h2;
+        this.ch = h1;
+        this.first = true;
+    }
+
+    update(): void {
+        if (this.first && this.h2.enabled && !this.h2.busted) {
+            this.ch = this.h2;
+            this.first = false;
+            return;
+        }
+        else if (!this.first && !this.h1.busted) {
+            this.ch = this.h1;
+            this.first = true;
+            return;
+        }
+        return;
+    }
 }
 
 
