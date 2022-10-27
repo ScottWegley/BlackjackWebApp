@@ -512,8 +512,12 @@ function playerWin(): void {
     if (!playerHand2.busted && playerHand2.enabled) { playerWinHand2(); }
 }
 
+function playerWinHand1(blackjack?: boolean): void {
+    let spoils: number = ((blackjack) ? 2.5 * currentBets[0] : 2 * currentBets[0]);
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + playerHand1.evaluate().toString() + " from " + playerHand1.toStringList() + "!");
     currentMoney += spoils;
-    prepNextRound();
+    if(blackjack) prepNextRound();
+}
 }
 
 function prepNextRound(): void {
