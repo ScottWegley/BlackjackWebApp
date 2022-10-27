@@ -198,14 +198,10 @@ class Hand extends Pile {
 
     evaluate(): number {
         this.updateValue();
-        if (this.value[0] == this.value[1]) {
-            return this.value[0];
-        } else if (this.value[0] > this.value[1] && this.value[0] <= 21) {
-            return this.value[0];
+        if (Math.max(this.value[0], this.value[1]) <= 21) {
+            return Math.max(this.value[0], this.value[1]);
         }
-        else {
-            return this.value[1];
-        }
+        return Math.min(this.value[0], this.value[1]);
     }
 
     toString(): string {
