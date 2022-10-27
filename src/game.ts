@@ -359,6 +359,10 @@ function startGame(): void {
     btnSplit.addEventListener('click', () => {
         playerHand2.enabled = true;
         playerHand2.push(playerHand1.pop()!);
+        currentMoney -= currentBets[0];
+        currentBets[1] = currentBets[0];
+        dealTo(playerHand1);
+        dealTo(playerHand2);
         updateDisplay();
     });
 
