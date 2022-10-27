@@ -561,6 +561,9 @@ function dealerResolve() {
 
 }
 
+function evalAllHands(): void {
+}
+
 function updateDisplay(): void {
     Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
         let myEle = ele as HTMLElement;
