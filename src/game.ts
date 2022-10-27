@@ -571,7 +571,7 @@ function evalAllHands(): void {
         pushHand1();
         dealerWins = false;
     }
-    if (playerHand1.evaluate() > dealerHand.evaluate()) {
+    if (playerHand1.evaluate() > dealerHand.evaluate() && !playerHand1.busted) {
         playerWinHand1();
         dealerWins = false;
     }
