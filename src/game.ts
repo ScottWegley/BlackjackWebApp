@@ -408,7 +408,9 @@ function startGame(): void {
     hands = [dealerHand, playerHand1, playerHand2];
 
     currentMoney = iSettings.cashStart;
-    currentBet = 0;
+    currentBets = [0, 0];
+
+    hm = new HandManager(playerHand1, playerHand2);
 
     gameSetup();
 
