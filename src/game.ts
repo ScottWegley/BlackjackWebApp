@@ -326,6 +326,8 @@ function startGame(): void {
     gStarted = document.getElementById('gStarted') as HTMLElement;
     rStarted = document.getElementById('rStarted') as HTMLElement;
 
+    bet2 = document.getElementById('bet2') as HTMLElement;
+
     admin1.addEventListener('click', () => { adminOne() });
     admin2.addEventListener('click', () => { adminTwo() });
     admin3.addEventListener('click', () => { adminThree() });
