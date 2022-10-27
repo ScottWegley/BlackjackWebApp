@@ -628,6 +628,7 @@ function updateDisplay(): void {
             (playerHand2.div.firstElementChild as HTMLElement).style.paddingLeft = (playerHand2.div.lastElementChild as HTMLElement).style.paddingRight = '5px';
         }
     }
+    playerHand1.div.style.borderColor = playerHand2.div.style.borderColor = 'white';
     pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
 
     if (dealerHand.evaluate() != 0) {
