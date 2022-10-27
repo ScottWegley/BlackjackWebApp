@@ -518,6 +518,13 @@ function playerWinHand1(blackjack?: boolean): void {
     currentMoney += spoils;
     if(blackjack) prepNextRound();
 }
+
+function playerWinHand2(): void {
+    let spoils: number = 2 * currentBets[1];
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + playerHand2.evaluate().toString() + " from " + playerHand2.toStringList() + "!");
+    currentMoney += spoils;
+}
+
 }
 
 function prepNextRound(): void {
