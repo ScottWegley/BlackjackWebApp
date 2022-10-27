@@ -342,6 +342,7 @@ function startGame(): void {
 
     btnBet = document.getElementById('btnBet') as HTMLButtonElement;
     inBet = document.getElementById('inBet') as HTMLInputElement;
+    inBet.value = '0';
 
     btnBet.addEventListener('click', () => {
         currentBet = parseInt(inBet.value);
