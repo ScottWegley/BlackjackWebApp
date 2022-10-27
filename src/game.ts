@@ -539,7 +539,8 @@ function prepNextRound(): void {
     roundStarted = false;
     hands.forEach((h: Hand) => {
         while (!(h.currentSize == 0)) {
-            discardPile.push(h.pop()!)
+            discardPile.push(h.pop()!);
+            discardPile.cards[discardPile.currentSize - 1].visible = true;
         }
     });
     playerHand2.enabled = false;
