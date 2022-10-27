@@ -534,7 +534,8 @@ function pushHand2(): void {
 }
 
 function prepNextRound(): void {
-    currentBet = 0;
+    currentBets = [0, 0];
+    inBet.value = '0';
     roundStarted = false;
     hands.forEach((h: Hand) => {
         while (!(h.currentSize == 0)) {
