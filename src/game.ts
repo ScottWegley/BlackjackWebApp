@@ -507,10 +507,11 @@ function dealerWin(): void {
     prepNextRound();
 }
 
-function playerWin(blackjack?:boolean): void {
-    let winningHand: Hand = ((playerHand1.evaluate() > playerHand2.evaluate()) ? playerHand1 : playerHand2);
-    let spoils: number = ((blackjack) ? 2.5 * currentBet : 2 * currentBet)
-    alert("You win $" + spoils.toLocaleString() + " this round with a " + winningHand.evaluate().toString() + " from " + winningHand.toStringList() + "!");
+function playerWin(): void {
+    if (!playerHand1.busted) { playerWinHand1(); }
+    if (!playerHand2.busted && playerHand2.enabled) { playerWinHand2(); }
+}
+
     currentMoney += spoils;
     prepNextRound();
 }
