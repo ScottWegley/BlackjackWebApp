@@ -622,6 +622,12 @@ function updateDisplay(): void {
     bet2.style.display = (playerHand2.enabled ? 'inline-block' : 'none');
 
     playerHand1.div.style.marginRight = playerHand2.div.style.marginLeft = (playerHand2.enabled ? '5px' : '0px');
+    if (roundStarted) {
+        (playerHand1.div.firstElementChild as HTMLElement).style.paddingLeft = (playerHand1.div.lastElementChild as HTMLElement).style.paddingRight = '5px';
+        if (playerHand2.enabled) {
+            (playerHand2.div.firstElementChild as HTMLElement).style.paddingLeft = (playerHand2.div.lastElementChild as HTMLElement).style.paddingRight = '5px';
+        }
+    }
     pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
 
     if (dealerHand.evaluate() != 0) {
