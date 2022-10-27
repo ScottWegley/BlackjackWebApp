@@ -614,7 +614,7 @@ function updateDisplay(): void {
 
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
     btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
-    btnDD.style.display = ((roundStarted && currentMoney > currentBet) ? 'inline-block' : 'none');
+    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+ hm.first)]) ? 'inline-block' : 'none');
     btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
 
