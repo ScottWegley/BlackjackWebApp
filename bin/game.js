@@ -140,6 +140,7 @@ class Hand extends Pile {
     constructor(div, owner) {
         super(1);
         this.enabled = true;
+        this.busted = false;
         this.value = [0, 0];
         this.div = div;
         this.owner = owner;
@@ -149,7 +150,8 @@ class Hand extends Pile {
         if (returnVal instanceof Card) {
             return returnVal;
         }
-        this.updateValue();
+        if (this.evaluate() <= 21)
+            this.busted = false;
         return;
     }
     push(inCard) {
@@ -157,20 +159,16 @@ class Hand extends Pile {
             this.maxSize++;
         }
         super.push(inCard);
-        this.updateValue();
+        if (this.evaluate() > 21)
+            this.busted = true;
         return this;
     }
     evaluate() {
         this.updateValue();
-        if (this.value[0] == this.value[1]) {
-            return this.value[0];
+        if (Math.max(this.value[0], this.value[1]) <= 21) {
+            return Math.max(this.value[0], this.value[1]);
         }
-        else if (this.value[0] > this.value[1] && this.value[0] <= 21) {
-            return this.value[0];
-        }
-        else {
-            return this.value[1];
-        }
+        return Math.min(this.value[0], this.value[1]);
     }
     toString() {
         if (this.currentSize == 0)
@@ -225,17 +223,39 @@ class Hand extends Pile {
         });
     }
 }
+class HandManager {
+    constructor(h1, h2) {
+        this.h1 = h1;
+        this.h2 = h2;
+        this.ch = h1;
+        this.first = true;
+    }
+    update() {
+        if (this.first && this.h2.enabled && !this.h2.busted) {
+            this.ch = this.h2;
+            this.first = false;
+            return;
+        }
+        else if (!this.first && !this.h1.busted) {
+            this.ch = this.h1;
+            this.first = true;
+            return;
+        }
+        return;
+    }
+}
 let iSettings;
 let dealerPile, discardPile;
-let currentMoney, currentBet;
+let currentMoney, currentBets;
 let dealerHand, playerHand1, playerHand2;
+let hm;
 let hands;
 let roundStarted;
 let btnBet;
 let inBet;
 let btnStand, btnHit, btnDD, btnSplit, btnSurrender;
 let admin1, admin2, admin3, admin4;
-let gStarted, rStarted, pDealer, pPlayer1, pPlayer2;
+let gStarted, rStarted, pDealer, pPlayer1, pPlayer2, bet2;
 window.addEventListener('load', () => {
     startGame();
 });
@@ -255,6 +275,7 @@ function startGame() {
     btnSurrender = document.getElementById('btnSurrender');
     gStarted = document.getElementById('gStarted');
     rStarted = document.getElementById('rStarted');
+    bet2 = document.getElementById('bet2');
     admin1.addEventListener('click', () => { adminOne(); });
     admin2.addEventListener('click', () => { adminTwo(); });
     admin3.addEventListener('click', () => { adminThree(); });
@@ -266,23 +287,77 @@ function startGame() {
     });
     btnBet = document.getElementById('btnBet');
     inBet = document.getElementById('inBet');
+    inBet.value = '0';
     btnBet.addEventListener('click', () => {
-        currentBet = parseInt(inBet.value);
-        if (currentBet <= 0 || currentBet > currentMoney || isNaN(currentBet)) {
+        if (isNaN(parseInt(inBet.value)) || parseInt(inBet.value) <= 0 || parseInt(inBet.value) > currentMoney) {
             inBet.value = '0';
             return;
         }
         else {
+            currentBets[0] = parseInt(inBet.value);
             roundStarted = true;
-            currentMoney -= currentBet;
-            inBet.value = currentBet.toString();
+            currentMoney -= currentBets[0];
             dealHands();
         }
     });
     btnSplit.addEventListener('click', () => {
         playerHand2.enabled = true;
         playerHand2.push(playerHand1.pop());
+        currentMoney -= currentBets[0];
+        currentBets[1] = currentBets[0];
+        dealTo(playerHand1);
+        dealTo(playerHand2);
         updateDisplay();
+    });
+    btnHit.addEventListener('click', () => {
+        dealTo(hm.ch);
+        updateDisplay();
+        if (hm.ch.busted) {
+            setTimeout(() => { alert('Busted'); }, 120);
+            if (hm.first) {
+                if (playerHand2.enabled) {
+                    hm.update();
+                    updateDisplay();
+                }
+                else {
+                    setTimeout(() => { dealerWin(); }, 120);
+                }
+            }
+            else {
+                dealerResolve();
+            }
+        }
+        setTimeout(() => { checkForLoss(); }, 200);
+    });
+    btnStand.addEventListener('click', () => {
+        if (hm.first) {
+            if (playerHand2.enabled) {
+                hm.update();
+                updateDisplay();
+            }
+            else {
+                dealerResolve();
+            }
+        }
+        else {
+            dealerResolve();
+        }
+    });
+    btnSurrender.addEventListener('click', () => {
+        hm.ch.busted = true;
+        currentBets[(+hm.first)] = 0;
+        if (hm.first) {
+            if (playerHand2.enabled) {
+                hm.update();
+                updateDisplay();
+            }
+            else {
+                dealerWin();
+            }
+        }
+        else {
+            dealerResolve();
+        }
     });
     dealerHand = new Hand(document.getElementById('dealerHand'), 'DEALER');
     playerHand1 = new Hand(document.getElementById('playerHand1'), 'PLAYER');
@@ -293,7 +368,8 @@ function startGame() {
     playerHand2.enabled = false;
     hands = [dealerHand, playerHand1, playerHand2];
     currentMoney = iSettings.cashStart;
-    currentBet = 0;
+    currentBets = [0, 0];
+    hm = new HandManager(playerHand1, playerHand2);
     gameSetup();
     updateDisplay();
 }
@@ -307,6 +383,36 @@ function adminThree() {
 }
 function adminFour() {
 }
+function checkForLoss() {
+    if (!playerHand2.enabled) {
+        if (playerHand1.busted) {
+            dealerWin();
+        }
+    }
+    else {
+        if (playerHand1.busted && playerHand2.busted) {
+            dealerWin();
+        }
+    }
+    return;
+}
+function dealTo(h, i) {
+    if (typeof i != 'number') {
+        i = 1;
+    }
+    if (dealerPile.currentSize <= 1) {
+        while (discardPile.currentSize > 0) {
+            dealerPile.push(discardPile.pop());
+        }
+    }
+    if (i > 0) {
+        h.push(dealerPile.deal());
+    }
+    else {
+        return;
+    }
+    dealTo(h, --i);
+}
 function gameSetup() {
     dealerPile = new Pile(52 * iSettings.decks);
     discardPile = new Pile(dealerPile.maxSize);
@@ -316,19 +422,14 @@ function gameSetup() {
     dealerPile.shuffle();
 }
 function dealHands() {
-    if (dealerPile.currentSize <= 4) {
-        while (discardPile.currentSize > 0) {
-            dealerPile.push(discardPile.pop());
-        }
-    }
     hands.forEach((h) => {
         if (h.enabled) {
-            h.push(dealerPile.deal()).push(dealerPile.deal());
+            dealTo(h, 2);
         }
     });
     dealerHand.cards[0].visible = false;
-    checkForBlackjack();
     updateDisplay();
+    setTimeout(() => { checkForBlackjack(); }, 120);
     return;
 }
 function checkForBlackjack() {
@@ -337,31 +438,94 @@ function checkForBlackjack() {
         return;
     }
     if (playerHand1.evaluate() == 21) {
-        playerWin(true);
+        playerWinHand1(true);
         return;
     }
+    return;
 }
 function dealerWin() {
     alert("The dealer wins this round with a " + dealerHand.evaluate().toString() + " from a " + dealerHand.toStringList() + "!");
     prepNextRound();
 }
-function playerWin(blackjack) {
-    let winningHand = ((playerHand1.evaluate() > playerHand2.evaluate()) ? playerHand1 : playerHand2);
-    let spoils = ((blackjack) ? 2.5 * currentBet : 2 * currentBet);
-    alert("You win $" + spoils.toLocaleString() + " this round with a " + winningHand.evaluate().toString() + " from " + winningHand.toStringList() + "!");
+function playerWin() {
+    if (!playerHand1.busted) {
+        playerWinHand1();
+    }
+    if (!playerHand2.busted && playerHand2.enabled) {
+        playerWinHand2();
+    }
+}
+function playerWinHand1(blackjack) {
+    let spoils = ((blackjack) ? 2.5 * currentBets[0] : 2 * currentBets[0]);
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + playerHand1.evaluate().toString() + " from " + playerHand1.toStringList() + "!");
     currentMoney += spoils;
-    prepNextRound();
+    if (blackjack)
+        prepNextRound();
+}
+function playerWinHand2() {
+    let spoils = 2 * currentBets[1];
+    alert("You win $" + spoils.toLocaleString() + " this round with a " + playerHand2.evaluate().toString() + " from " + playerHand2.toStringList() + "!");
+    currentMoney += spoils;
+}
+function pushHand1() {
+    alert('You pushed with the dealer with a ' + playerHand1.evaluate().toString() + " from " + playerHand1.toStringList() + "!");
+}
+function pushHand2() {
+    alert('You pushed with the dealer with a ' + playerHand2.evaluate().toString() + " from " + playerHand2.toStringList() + "!");
 }
 function prepNextRound() {
-    currentBet = 0;
+    currentBets = [0, 0];
+    inBet.value = '0';
     roundStarted = false;
     hands.forEach((h) => {
         while (!(h.currentSize == 0)) {
             discardPile.push(h.pop());
+            discardPile.cards[discardPile.currentSize - 1].visible = true;
         }
     });
     playerHand2.enabled = false;
+    hm.ch = playerHand1;
+    hm.first = true;
     updateDisplay();
+}
+function dealerResolve() {
+    dealerHand.cards[0].visible = true;
+    updateDisplay();
+    while (dealerHand.evaluate() < 17) {
+        dealTo(dealerHand);
+        updateDisplay();
+    }
+    setTimeout(() => { evalAllHands(); }, 150);
+}
+function evalAllHands() {
+    let dealerWins = true;
+    if (dealerHand.busted) {
+        dealerWins = false;
+        playerWin();
+    }
+    if (playerHand1.evaluate() == dealerHand.evaluate()) {
+        pushHand1();
+        dealerWins = false;
+    }
+    if (playerHand1.evaluate() > dealerHand.evaluate() && !playerHand1.busted) {
+        playerWinHand1();
+        dealerWins = false;
+    }
+    if (playerHand2.enabled && !playerHand2.busted) {
+        if (dealerHand.evaluate() == playerHand2.evaluate()) {
+            pushHand2();
+            dealerWins = false;
+        }
+        if (playerHand2.evaluate() > dealerHand.evaluate()) {
+            playerWinHand2();
+            dealerWins = false;
+        }
+    }
+    if (dealerWins)
+        dealerWin();
+    else
+        prepNextRound();
+    return;
 }
 function updateDisplay() {
     Array.from(document.getElementsByClassName("admin")).forEach((ele) => {
@@ -376,6 +540,8 @@ function updateDisplay() {
             outImg.src = c.imgPath();
             outImg.style.width = '55px';
             outImg.style.height = '80px';
+            outImg.style.paddingTop = '5px';
+            outImg.style.paddingBottom = '1px';
             if (!c.visible) {
                 outImg.setAttribute('id', 'hiddenImg');
             }
@@ -384,9 +550,20 @@ function updateDisplay() {
     });
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
     btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
-    btnDD.style.display = ((roundStarted && currentMoney > currentBet) ? 'inline-block' : 'none');
-    btnSplit.style.display = ((roundStarted && !playerHand2.enabled) ? 'inline-block' : 'none');
+    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+hm.first)]) ? 'inline-block' : 'none');
+    btnSplit.style.display = ((currentMoney >= currentBets[0] && roundStarted && !playerHand2.enabled && playerHand1.currentSize == 2 && (playerHand1.cards[0].value == playerHand1.cards[1].value || (new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[0].value) && new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[1].value)))) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
+    playerHand1.div.style.display = (roundStarted ? 'inline-block' : 'none');
+    bet2.style.display = (playerHand2.enabled ? 'inline-block' : 'none');
+    playerHand1.div.style.marginRight = playerHand2.div.style.marginLeft = (playerHand2.enabled ? '5px' : '0px');
+    if (roundStarted) {
+        playerHand1.div.firstElementChild.style.paddingLeft = playerHand1.div.lastElementChild.style.paddingRight = '5px';
+        if (playerHand2.enabled) {
+            playerHand2.div.firstElementChild.style.paddingLeft = playerHand2.div.lastElementChild.style.paddingRight = '5px';
+        }
+    }
+    playerHand1.div.style.borderColor = playerHand2.div.style.borderColor = 'white';
+    (hm.first ? playerHand1.div.style.borderColor = 'green' : playerHand2.div.style.borderColor = 'green');
     pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
     if (dealerHand.evaluate() != 0) {
         pDealer.textContent = 'DHand \n' + dealerHand.toString();
@@ -397,8 +574,18 @@ function updateDisplay() {
     if (playerHand2.evaluate() != 0) {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
-    inBet.value = (roundStarted ? currentBet.toLocaleString() : inBet.value);
+    while (pDealer.offsetHeight < Math.max(pPlayer1.offsetHeight, pPlayer2.offsetHeight)) {
+        pDealer.textContent += '\n';
+    }
+    while (pPlayer1.offsetHeight < Math.max(pDealer.offsetHeight, pPlayer2.offsetHeight)) {
+        pPlayer1.textContent += '\n';
+    }
+    while (pPlayer2.offsetHeight < Math.max(pPlayer1.offsetHeight, pDealer.offsetHeight)) {
+        pPlayer2.textContent += '\n';
+    }
+    inBet.value = (roundStarted ? currentBets[0].toLocaleString() : inBet.value);
     btnBet.disabled = inBet.disabled = roundStarted;
+    bet2.textContent = '2nd Bet: $' + currentBets[1].toLocaleString();
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
     document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
     document.getElementById('chkAdmin').checked = iSettings.admin;
