@@ -366,6 +366,18 @@ function startGame(): void {
         updateDisplay();
     });
 
+    btnStand.addEventListener('click', () => {
+        if (hm.first) {
+            if (playerHand2.enabled) {
+                hm.update();
+                updateDisplay();
+            } else {
+                dealerResolve();
+            }
+        } else {
+            dealerResolve();
+        }
+    });
     dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement, 'DEALER');
     playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement, 'PLAYER');
     playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLDivElement, 'PLAYER');
