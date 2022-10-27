@@ -400,6 +400,15 @@ function adminFour(): void {
 }
 
 function dealTo(h: Hand, i?: number): void {
+    if (typeof i != 'number') { i = 1; }
+    if (dealerPile.currentSize <= 1) {
+        while (discardPile.currentSize > 0) {
+            dealerPile.push(discardPile.pop()!);
+        }
+    }
+    if (i > 0) { h.push(dealerPile.deal()!); }
+    else { return; }
+    dealTo(h, --i);
 }
 
 function gameSetup(): void {
