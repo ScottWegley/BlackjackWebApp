@@ -485,6 +485,8 @@ function dealHands(): void {
     checkForBlackjack()
 
     updateDisplay();
+    setTimeout(() => { checkForBlackjack() }, 120);
+
     return;
 }
 
