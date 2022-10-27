@@ -292,6 +292,7 @@ let iSettings: GameSettings;
 let dealerPile: Pile, discardPile: Pile;
 let currentMoney: number, currentBets: number[];
 let dealerHand: Hand, playerHand1: Hand, playerHand2: Hand;
+let hm: HandManager;
 let hands: Hand[];
 let roundStarted: boolean;
 let btnBet: HTMLButtonElement;
