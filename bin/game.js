@@ -397,9 +397,9 @@ function updateDisplay() {
     if (playerHand2.evaluate() != 0) {
         pPlayer2.textContent = 'P2Hand \n' + playerHand2.toString();
     }
+    inBet.value = (roundStarted ? currentBet.toLocaleString() : inBet.value);
     btnBet.disabled = inBet.disabled = roundStarted;
     rStarted.textContent = "Round Started: " + roundStarted.valueOf();
     document.getElementById('playerMoney').innerText = "$" + currentMoney.toLocaleString();
-    document.getElementById('inBet').value = currentBet.toLocaleString();
     document.getElementById('chkAdmin').checked = iSettings.admin;
 }
