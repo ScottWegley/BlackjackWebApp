@@ -525,6 +525,12 @@ function playerWinHand2(): void {
     currentMoney += spoils;
 }
 
+function pushHand1(): void {
+    alert('You pushed with the dealer with a ' + playerHand1.evaluate().toString() + " from " + playerHand1.toStringList() + "!")
+}
+
+function pushHand2(): void {
+    alert('You pushed with the dealer with a ' + playerHand2.evaluate().toString() + " from " + playerHand2.toStringList() + "!")
 }
 
 function prepNextRound(): void {
