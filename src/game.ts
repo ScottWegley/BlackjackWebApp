@@ -562,6 +562,10 @@ function dealerResolve() {
 }
 
 function evalAllHands(): void {
+    let dealerWins = true;
+    if (dealerWins) dealerWin();
+    else prepNextRound();
+    return;
 }
 
 function updateDisplay(): void {
