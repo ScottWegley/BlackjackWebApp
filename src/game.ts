@@ -290,7 +290,7 @@ class HandManager {
 
 let iSettings: GameSettings;
 let dealerPile: Pile, discardPile: Pile;
-let currentMoney: number, currentBet: number;
+let currentMoney: number, currentBets: number[];
 let dealerHand: Hand, playerHand1: Hand, playerHand2: Hand;
 let hands: Hand[];
 let roundStarted: boolean;
