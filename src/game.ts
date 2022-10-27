@@ -378,6 +378,23 @@ function startGame(): void {
             dealerResolve();
         }
     });
+
+    btnSurrender.addEventListener('click', () => {
+        hm.ch.busted = true;
+        currentBets[(+ hm.first)] = 0;
+        if (hm.first) {
+            if (playerHand2.enabled) {
+                hm.update();
+                updateDisplay();
+            } else {
+                dealerWin();
+            }
+        } else {
+            dealerResolve();
+        }
+    });
+
+
     dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement, 'DEALER');
     playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement, 'PLAYER');
     playerHand2 = new Hand(document.getElementById('playerHand2') as HTMLDivElement, 'PLAYER');
