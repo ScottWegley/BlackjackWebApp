@@ -399,6 +399,9 @@ function adminFour(): void {
 
 }
 
+function dealTo(h: Hand, i?: number): void {
+}
+
 function gameSetup(): void {
     dealerPile = new Pile(52 * iSettings.decks);
     discardPile = new Pile(dealerPile.maxSize);
