@@ -495,11 +495,11 @@ function checkForBlackjack(): void {
         dealerWin();
         return;
     }
-    if(playerHand1.evaluate() == 21){
-        playerWin(true);
+    if (playerHand1.evaluate() == 21) {
+        playerWinHand1(true);
         return;
     }
-
+    return;
 }
 
 function dealerWin(): void {
