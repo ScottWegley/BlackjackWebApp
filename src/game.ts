@@ -629,6 +629,8 @@ function updateDisplay(): void {
         }
     }
     playerHand1.div.style.borderColor = playerHand2.div.style.borderColor = 'white';
+    (hm.first ? playerHand1.div.style.borderColor = 'green' : playerHand2.div.style.borderColor = 'green');
+
     pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
 
     if (dealerHand.evaluate() != 0) {
