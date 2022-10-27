@@ -619,6 +619,7 @@ function updateDisplay(): void {
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
     playerHand1.div.style.display = (roundStarted ? 'inline-block' : 'none');
 
+    bet2.style.display = (playerHand2.enabled ? 'inline-block' : 'none');
     pDealer.textContent = pPlayer1.textContent = pPlayer2.textContent = '';
 
     if (dealerHand.evaluate() != 0) {
