@@ -183,7 +183,7 @@ class Hand extends Pile {
         if (returnVal instanceof Card) {
             return returnVal;
         }
-        this.updateValue();
+        if (this.evaluate() <= 21) this.busted = false;
         return;
     }
 
@@ -192,7 +192,7 @@ class Hand extends Pile {
             this.maxSize++;
         }
         super.push(inCard);
-        this.updateValue();
+        if (this.evaluate() > 21) this.busted = true;
         return this;
     }
 
