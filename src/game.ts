@@ -659,6 +659,7 @@ function updateDisplay(): void {
         pPlayer2.textContent += '\n';
     }
 
+    inBet.value = (roundStarted ? currentBets[0].toLocaleString() : inBet.value);
     btnBet.disabled = inBet.disabled = roundStarted;
     bet2.textContent = '2nd Bet: $' + currentBets[1].toLocaleString();
 
