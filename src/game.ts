@@ -549,6 +549,17 @@ function prepNextRound(): void {
     updateDisplay();
 }
 
+function dealerResolve() {
+
+    dealerHand.cards[0].visible = true;
+    updateDisplay();
+    while (dealerHand.evaluate() < 17) {
+        dealTo(dealerHand);
+        updateDisplay();
+    }
+    setTimeout(() => { evalAllHands() }, 150);
+
+}
 
 function updateDisplay(): void {
     Array.from(document.getElementsByClassName("admin")).forEach((ele: Element) => {
