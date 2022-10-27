@@ -477,7 +477,7 @@ function dealHands(): void {
     }
     hands.forEach((h: Hand) => {
         if (h.enabled) {
-            h.push(dealerPile.deal()!).push(dealerPile.deal()!);
+            dealTo(h, 2);
         }
     });
     dealerHand.cards[0].visible = false;
