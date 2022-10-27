@@ -6,6 +6,8 @@ body {
 
 #playerSide .hand {
     display: inline-block;
+    border-style: solid;
+    border-color: white;
 }
 
 .displayElement {
@@ -22,6 +24,14 @@ body {
     border-radius: 25px;
 }
 
+#pDealer, #pPlayer1 {
+    white-space: pre-wrap;
+}
+
 #inBet {
     width: 12.5%;
+}
+
+#menu {
+    padding: 5px;
 }
