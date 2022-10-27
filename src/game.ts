@@ -345,14 +345,13 @@ function startGame(): void {
     inBet.value = '0';
 
     btnBet.addEventListener('click', () => {
-        currentBet = parseInt(inBet.value);
-        if (currentBet <= 0 || currentBet > currentMoney || isNaN(currentBet)) {
+        if (isNaN(parseInt(inBet.value)) || parseInt(inBet.value) <= 0 || parseInt(inBet.value) > currentMoney) {
             inBet.value = '0';
             return;
         } else {
+            currentBets[0] = parseInt(inBet.value);
             roundStarted = true;
-            currentMoney -= currentBet;
-            inBet.value = currentBet.toString();
+            currentMoney -= currentBets[0];
             dealHands();
         }
     });
