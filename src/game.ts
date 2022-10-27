@@ -366,6 +366,25 @@ function startGame(): void {
         updateDisplay();
     });
 
+    btnHit.addEventListener('click', () => {
+        dealTo(hm.ch);
+        updateDisplay();
+        if (hm.ch.busted) {
+            setTimeout(() => { alert('Busted') }, 120);
+            if (hm.first) {
+                if (playerHand2.enabled) {
+                    hm.update();
+                    updateDisplay();
+                } else {
+                    setTimeout(() => { dealerWin() }, 120);
+                }
+            } else {
+                dealerResolve();
+            }
+        }
+        setTimeout(() => { checkForLoss() }, 200);
+    });
+
     btnStand.addEventListener('click', () => {
         if (hm.first) {
             if (playerHand2.enabled) {
@@ -470,19 +489,12 @@ function gameSetup(): void {
 }
 
 function dealHands(): void {
-    if(dealerPile.currentSize <= 4) {
-        while(discardPile.currentSize > 0){
-            dealerPile.push(discardPile.pop()!);
-        }
-    }
     hands.forEach((h: Hand) => {
         if (h.enabled) {
             dealTo(h, 2);
         }
     });
     dealerHand.cards[0].visible = false;
-
-    checkForBlackjack()
 
     updateDisplay();
     setTimeout(() => { checkForBlackjack() }, 120);
