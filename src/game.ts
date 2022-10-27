@@ -299,7 +299,7 @@ let btnBet: HTMLButtonElement;
 let inBet: HTMLInputElement;
 let btnStand: HTMLButtonElement, btnHit: HTMLButtonElement, btnDD: HTMLButtonElement, btnSplit: HTMLButtonElement, btnSurrender: HTMLButtonElement;
 let admin1: HTMLButtonElement, admin2: HTMLButtonElement, admin3: HTMLButtonElement, admin4: HTMLButtonElement;
-let gStarted: HTMLElement, rStarted: HTMLElement, pDealer: HTMLElement, pPlayer1: HTMLElement, pPlayer2: HTMLElement;
+let gStarted: HTMLElement, rStarted: HTMLElement, pDealer: HTMLElement, pPlayer1: HTMLElement, pPlayer2: HTMLElement, bet2: HTMLElement;
 
 window.addEventListener('load', () => {
     startGame();
