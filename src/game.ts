@@ -567,6 +567,10 @@ function evalAllHands(): void {
         dealerWins = false;
         playerWin();
     }
+    if (playerHand1.evaluate() == dealerHand.evaluate()) {
+        pushHand1();
+        dealerWins = false;
+    }
     if (dealerWins) dealerWin();
     else prepNextRound();
     return;
