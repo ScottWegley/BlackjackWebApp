@@ -605,6 +605,8 @@ function updateDisplay(): void {
             outImg.src = c.imgPath();
             outImg.style.width = '55px';
             outImg.style.height = '80px';
+            outImg.style.paddingTop = '5px';
+            outImg.style.paddingBottom = '1px';
             if (!c.visible) { outImg.setAttribute('id', 'hiddenImg'); }
             h.div.appendChild(outImg);
         });
