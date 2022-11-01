@@ -313,21 +313,21 @@ function startGame() {
         dealTo(hm.ch);
         updateDisplay();
         if (hm.ch.busted) {
-            setTimeout(() => { alert('Busted'); }, 120);
+            setTimeout(() => { alert('Busted'); }, 185);
             if (hm.first) {
                 if (playerHand2.enabled) {
                     hm.update();
                     updateDisplay();
                 }
                 else {
-                    setTimeout(() => { dealerWin(); }, 120);
+                    setTimeout(() => { dealerWin(); }, 185);
+                    return;
                 }
             }
             else {
                 dealerResolve();
             }
         }
-        setTimeout(() => { checkForLoss(); }, 200);
     });
     btnStand.addEventListener('click', () => {
         if (hm.first) {
@@ -345,7 +345,7 @@ function startGame() {
     });
     btnSurrender.addEventListener('click', () => {
         hm.ch.busted = true;
-        currentBets[(+hm.first)] = 0;
+        currentBets[(+!hm.first)] = 0;
         if (hm.first) {
             if (playerHand2.enabled) {
                 hm.update();
@@ -358,6 +358,43 @@ function startGame() {
         else {
             dealerResolve();
         }
+    });
+    btnDD.addEventListener('click', () => {
+        currentMoney -= currentBets[(+!hm.first)];
+        console.log(currentMoney);
+        currentBets[(+!hm.first)] *= 2;
+        console.log(currentBets[(+!hm.first)]);
+        dealTo(hm.ch);
+        updateDisplay();
+        if (hm.ch.busted) {
+            setTimeout(() => { alert('Busted'); }, 185);
+            if (hm.first) {
+                if (playerHand2.enabled) {
+                    hm.update();
+                }
+                else {
+                    setTimeout(() => { dealerWin(); }, 185);
+                    return;
+                }
+            }
+            else {
+                dealerResolve();
+            }
+        }
+        else {
+            if (hm.first) {
+                if (playerHand2.enabled) {
+                    hm.update();
+                }
+                else {
+                    dealerResolve();
+                }
+            }
+            else {
+                dealerResolve();
+            }
+        }
+        updateDisplay();
     });
     dealerHand = new Hand(document.getElementById('dealerHand'), 'DEALER');
     playerHand1 = new Hand(document.getElementById('playerHand1'), 'PLAYER');
@@ -382,19 +419,6 @@ function adminTwo() {
 function adminThree() {
 }
 function adminFour() {
-}
-function checkForLoss() {
-    if (!playerHand2.enabled) {
-        if (playerHand1.busted) {
-            dealerWin();
-        }
-    }
-    else {
-        if (playerHand1.busted && playerHand2.busted) {
-            dealerWin();
-        }
-    }
-    return;
 }
 function dealTo(h, i) {
     if (typeof i != 'number') {
@@ -429,7 +453,7 @@ function dealHands() {
     });
     dealerHand.cards[0].visible = false;
     updateDisplay();
-    setTimeout(() => { checkForBlackjack(); }, 120);
+    setTimeout(() => { checkForBlackjack(); }, 185);
     return;
 }
 function checkForBlackjack() {
@@ -495,7 +519,7 @@ function dealerResolve() {
         dealTo(dealerHand);
         updateDisplay();
     }
-    setTimeout(() => { evalAllHands(); }, 150);
+    setTimeout(() => { evalAllHands(); }, 185);
 }
 function evalAllHands() {
     let dealerWins = true;
@@ -550,7 +574,7 @@ function updateDisplay() {
     });
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
     btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
-    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+hm.first)]) ? 'inline-block' : 'none');
+    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+!hm.first)]) ? 'inline-block' : 'none');
     btnSplit.style.display = ((currentMoney >= currentBets[0] && roundStarted && !playerHand2.enabled && playerHand1.currentSize == 2 && (playerHand1.cards[0].value == playerHand1.cards[1].value || (new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[0].value) && new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[1].value)))) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
     playerHand1.div.style.display = (roundStarted ? 'inline-block' : 'none');
