@@ -413,6 +413,39 @@ function startGame(): void {
         }
     });
 
+    btnDD.addEventListener('click', () => {
+        currentMoney -= currentBets[(+ !hm.first)];
+        console.log(currentMoney);
+        currentBets[(+ !hm.first)] *= 2;
+        console.log(currentBets[(+ !hm.first)]);
+        dealTo(hm.ch);
+        updateDisplay();
+        if (hm.ch.busted) {
+            setTimeout(() => { alert('Busted') }, 185);
+            if (hm.first) {
+                if (playerHand2.enabled) {
+                    hm.update();
+                } else {
+                    setTimeout(() => { dealerWin() }, 185);
+                    return;
+                }
+            } else {
+                dealerResolve();
+            }
+        } else {
+            if(hm.first){
+                if(playerHand2.enabled){
+                    hm.update();
+                } else {
+                    dealerResolve();
+                }
+            } else {
+                dealerResolve();
+            }
+        }
+        updateDisplay();
+    });
+
 
     dealerHand = new Hand(document.getElementById('dealerHand') as HTMLDivElement, 'DEALER');
     playerHand1 = new Hand(document.getElementById('playerHand1') as HTMLDivElement, 'PLAYER');
