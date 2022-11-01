@@ -400,7 +400,7 @@ function startGame(): void {
 
     btnSurrender.addEventListener('click', () => {
         hm.ch.busted = true;
-        currentBets[(+ hm.first)] = 0;
+        currentBets[(+ !hm.first)] = 0;
         if (hm.first) {
             if (playerHand2.enabled) {
                 hm.update();
@@ -659,7 +659,7 @@ function updateDisplay(): void {
 
     btnStand.style.display = (roundStarted ? 'inline-block' : 'none');
     btnHit.style.display = (roundStarted ? 'inline-block' : 'none');
-    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+ hm.first)]) ? 'inline-block' : 'none');
+    btnDD.style.display = ((roundStarted && currentMoney > currentBets[(+ !hm.first)]) ? 'inline-block' : 'none');
     btnSplit.style.display = ((currentMoney >= currentBets[0] && roundStarted && !playerHand2.enabled && playerHand1.currentSize == 2 && (playerHand1.cards[0].value == playerHand1.cards[1].value || (new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[0].value) && new Array('Ten', 'Jack', 'Queen', 'King').includes(playerHand1.cards[1].value)))) ? 'inline-block' : 'none');
     btnSurrender.style.display = (roundStarted ? 'inline-block' : 'none');
     playerHand1.div.style.display = (roundStarted ? 'inline-block' : 'none');
