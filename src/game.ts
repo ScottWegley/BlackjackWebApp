@@ -370,13 +370,13 @@ function startGame(): void {
         dealTo(hm.ch);
         updateDisplay();
         if (hm.ch.busted) {
-            setTimeout(() => { alert('Busted') }, 120);
+            setTimeout(() => { alert('Busted') }, 185);
             if (hm.first) {
                 if (playerHand2.enabled) {
                     hm.update();
                     updateDisplay();
                 } else {
-                    setTimeout(() => { dealerWin() }, 120);
+                    setTimeout(() => { dealerWin(); }, 185);
                 }
             } else {
                 dealerResolve();
@@ -530,7 +530,7 @@ function dealHands(): void {
     dealerHand.cards[0].visible = false;
 
     updateDisplay();
-    setTimeout(() => { checkForBlackjack() }, 120);
+    setTimeout(() => { checkForBlackjack() }, 185);
 
     return;
 }
@@ -602,7 +602,7 @@ function dealerResolve() {
         dealTo(dealerHand);
         updateDisplay();
     }
-    setTimeout(() => { evalAllHands() }, 150);
+    setTimeout(() => { evalAllHands() }, 185);
 
 }
 
