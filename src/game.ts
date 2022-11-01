@@ -377,12 +377,12 @@ function startGame(): void {
                     updateDisplay();
                 } else {
                     setTimeout(() => { dealerWin(); }, 185);
+                    return;
                 }
             } else {
                 dealerResolve();
             }
         }
-        setTimeout(() => { checkForLoss() }, 200);
     });
 
     btnStand.addEventListener('click', () => {
@@ -484,19 +484,6 @@ function adminThree(): void {
 
 function adminFour(): void {
 
-}
-
-function checkForLoss(): void {
-    if (!playerHand2.enabled) {
-        if (playerHand1.busted) {
-            dealerWin();
-        }
-    } else {
-        if (playerHand1.busted && playerHand2.busted) {
-            dealerWin();
-        }
-    }
-    return;
 }
 
 function dealTo(h: Hand, i?: number): void {
