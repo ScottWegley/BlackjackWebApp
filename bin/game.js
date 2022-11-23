@@ -313,7 +313,10 @@ function startGame() {
         dealTo(hm.ch);
         updateDisplay();
         if (hm.ch.busted) {
-            setTimeout(() => { alert('Busted'); }, 185);
+            setTimeout(() => {
+                alert('Busted');
+                console.log(hm.ch);
+            }, 185);
             if (hm.first) {
                 if (playerHand2.enabled) {
                     hm.update();

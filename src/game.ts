@@ -370,7 +370,10 @@ function startGame(): void {
         dealTo(hm.ch);
         updateDisplay();
         if (hm.ch.busted) {
-            setTimeout(() => { alert('Busted') }, 185);
+            setTimeout(() => {
+                alert('Busted');
+                console.log(hm.ch);
+            }, 185);
             if (hm.first) {
                 if (playerHand2.enabled) {
                     hm.update();
@@ -433,8 +436,8 @@ function startGame(): void {
                 dealerResolve();
             }
         } else {
-            if(hm.first){
-                if(playerHand2.enabled){
+            if (hm.first) {
+                if (playerHand2.enabled) {
                     hm.update();
                 } else {
                     dealerResolve();
@@ -548,7 +551,7 @@ function playerWinHand1(blackjack?: boolean): void {
     let spoils: number = ((blackjack) ? 2.5 * currentBets[0] : 2 * currentBets[0]);
     alert("You win $" + spoils.toLocaleString() + " this round with a " + playerHand1.evaluate().toString() + " from " + playerHand1.toStringList() + "!");
     currentMoney += spoils;
-    if(blackjack) prepNextRound();
+    if (blackjack) prepNextRound();
 }
 
 function playerWinHand2(): void {
