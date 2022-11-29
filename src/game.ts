@@ -169,7 +169,6 @@ class Hand extends Pile {
     div: HTMLDivElement;
     enabled: boolean = true;
     owner: Owner;
-    busted: boolean = false;
 
     constructor(div: HTMLDivElement, owner: Owner) {
         super(1);
@@ -183,7 +182,6 @@ class Hand extends Pile {
         if (returnVal instanceof Card) {
             return returnVal;
         }
-        if (this.evaluate() <= 21) this.busted = false;
         return;
     }
 
@@ -192,7 +190,7 @@ class Hand extends Pile {
             this.maxSize++;
         }
         super.push(inCard);
-        if (this.evaluate() > 21) this.busted = true;
+        this.updateValue;
         return this;
     }
 
@@ -273,12 +271,12 @@ class HandManager {
     }
 
     update(): void {
-        if (this.first && this.h2.enabled && !this.h2.busted) {
+        if (this.first && this.h2.enabled && !(this.h2.evaluate() > 21)) {
             this.ch = this.h2;
             this.first = false;
             return;
         }
-        else if (!this.first && !this.h1.busted) {
+        else if (!this.first && !(this.h1.evaluate() > 21)) {
             this.ch = this.h1;
             this.first = true;
             return;
@@ -369,9 +367,9 @@ function startGame(): void {
     btnHit.addEventListener('click', () => {
         dealTo(hm.ch);
         updateDisplay();
-        if (hm.ch.busted) {
+        if (hm.ch.evaluate() > 21) {
             setTimeout(() => {
-                alert('Busted');
+                alert('Busted with ' + hm.ch.evaluate());
                 console.log(hm.ch);
             }, 185);
             if (hm.first) {
@@ -402,7 +400,6 @@ function startGame(): void {
     });
 
     btnSurrender.addEventListener('click', () => {
-        hm.ch.busted = true;
         currentBets[(+ !hm.first)] = 0;
         if (hm.first) {
             if (playerHand2.enabled) {
@@ -423,8 +420,8 @@ function startGame(): void {
         console.log(currentBets[(+ !hm.first)]);
         dealTo(hm.ch);
         updateDisplay();
-        if (hm.ch.busted) {
-            setTimeout(() => { alert('Busted') }, 185);
+        if (hm.ch.evaluate() > 21) {
+            setTimeout(() => { alert('Busted with ' + hm.ch.evaluate()) }, 185);
             if (hm.first) {
                 if (playerHand2.enabled) {
                     hm.update();
@@ -543,8 +540,8 @@ function dealerWin(): void {
 }
 
 function playerWin(): void {
-    if (!playerHand1.busted) { playerWinHand1(); }
-    if (!playerHand2.busted && playerHand2.enabled) { playerWinHand2(); }
+    if (!(playerHand1.evaluate() > 21)) { playerWinHand1(); }
+    if (!(playerHand2.evaluate() > 21) && playerHand2.enabled) { playerWinHand2(); }
 }
 
 function playerWinHand1(blackjack?: boolean): void {
@@ -598,7 +595,7 @@ function dealerResolve() {
 
 function evalAllHands(): void {
     let dealerWins = true;
-    if (dealerHand.busted) {
+    if (dealerHand.evaluate() > 21) {
         dealerWins = false;
         playerWin();
     }
@@ -606,11 +603,11 @@ function evalAllHands(): void {
         pushHand1();
         dealerWins = false;
     }
-    if (playerHand1.evaluate() > dealerHand.evaluate() && !playerHand1.busted) {
+    if (playerHand1.evaluate() > dealerHand.evaluate() && !(playerHand1.evaluate() > 21)) {
         playerWinHand1();
         dealerWins = false;
     }
-    if (playerHand2.enabled && !playerHand2.busted) {
+    if (playerHand2.enabled && !(playerHand2.evaluate() > 21)) {
         if (dealerHand.evaluate() == playerHand2.evaluate()) {
             pushHand2();
             dealerWins = false;
